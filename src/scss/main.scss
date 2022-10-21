@@ -1,0 +1,110 @@
+@import "global/reset";
+@import "global/global";
+
+@import "plugins/bootstrap";
+
+// FONT LOADING
+
+*{
+    &:focus {
+        outline: 0
+    }
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    background: white;
+    // font-family: "Font_Name", "Arial", sans-serif;
+    color: $black;
+    font-size: 16px;
+    line-height: normal;
+    min-height: 100%;
+
+    &.overflow{
+        overflow: hidden;
+    }
+}
+
+a {
+    color: $primary;
+    text-decoration: none;
+
+    &:hover {
+        color: darken($primary, 10%);
+    }
+}
+
+b,
+strong {
+    font-weight: 500;
+}
+
+span {
+    &.highlight {
+        color: $primary;
+    }
+}
+
+small{font-size: 14px}
+
+.error {
+    background-color: $error;
+    color: $error;
+}
+
+.warning {
+    background-color: $warning;
+    color: $warning;
+}
+
+.success {
+    background-color: $success;
+    color: $success;
+}
+
+@for $i from 1 through 6 {
+    h#{$i} {
+        display: block;
+        font-weight: normal;
+    }
+}
+
+h1 {
+    font-size: 30px
+}
+
+h2 {
+    font-size: 24px
+}
+
+h3 {
+    font-size: 20px
+}
+
+h4 {
+    font-size: 17px
+}
+
+h5 {
+    font-size: 15px
+}
+
+h6 {
+    font-size: 13px
+}
+
+hr {
+    display: block;
+    margin: 0 0 $margin;
+    border: none;
+    border-bottom: 1px solid $mediumblack;
+}
+
+// Components
+@import "partials/menu";
+@import "partials/footer";
+@import "partials/page";

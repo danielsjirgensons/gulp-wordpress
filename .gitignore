@@ -1,4 +1,3 @@
-
 # VAGRANT
 .vagrant/
 
@@ -12,7 +11,7 @@ vendor/
 
 # Project
 .sass-cache
-assets/dist/
+assets/
 bower_components/
 node_modules/
 

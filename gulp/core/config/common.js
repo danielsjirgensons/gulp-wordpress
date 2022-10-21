@@ -9,8 +9,8 @@ var deepMerge = require('../utils/deepMerge');
 module.exports = deepMerge({
 	paths: {
 		assets: {
-			src: 'assets/src',
-			dest: 'assets/dist'
+			src: 'src',
+			dest: 'assets'
 		}
 	}
 });

@@ -2,13 +2,9 @@
   "name": "blank-theme",
   "description": "A starter-kit for WordPress themes",
   "version": "1.0.0",
-  "author": "Olivier Guilleux",
-  "authorURI": "https://www.olivier-guilleux.com",
+  "author": "Daniels Jirgensons",
+  "authorURI": "https://danielsjirgensons.github.io",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/oguilleux/webpack-gulp-wordpress-starter-theme.git"
-  },
   "keywords": [
     "wordpress",
     "theme",

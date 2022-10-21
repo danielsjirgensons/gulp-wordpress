@@ -1,28 +1,22 @@
 <?php
 get_header();
 ?>
+<main>
+	<?php
+	while (have_posts()) : the_post();
+	?>
 
-    <div id="primary" class="content-area">
-        <main id="main" class="site-main">
+		<section>
+			<?php the_title('<h1>', '</h1>'); ?>
 
-	        <?php
-	        while(have_posts()) : the_post();
-		        ?>
+			<?php
+			the_content();
+			?>
+		</section>
 
-                <section>
-			        <?php the_title('<h1>', '</h1>'); ?>
-
-			        <?php
-			        the_content();
-			        ?>
-                </section>
-
-		        <?php
-	        endwhile; // End of the loop.
-	        ?>
-
-        </main><!-- #main -->
-    </div><!-- #primary -->
-
+	<?php
+	endwhile; // End of the loop.
+	?>
+</main>
 <?php
 get_footer();

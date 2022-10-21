@@ -1,0 +1,29 @@
+$black: #111111;
+$primary: #05cab6;
+
+$darkGray: #555555;
+$gray: #808080;
+$lightGray: #e4e4e4;
+
+$lightBlack: rgba(black, 0.06);
+$mediumblack: rgba(black, 0.15);
+
+$error: #DC122A;
+$warning: #FF5722;
+$success: #0C9D58;
+
+$yellow: #fcd935;
+
+$lightShadow: 0px 5px 15px 0px $lightBlack;
+$shadow: 0px 5px 15px 0px $mediumblack;
+$mediumShadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.2);
+$transition: .3s ease-in-out;
+
+$white: #{'rgba(255,255,255,1)'};
+$transparent: #{'rgba(255,255,255,0)'};
+
+// vars
+$margin: 15px;
+$smallMargin: 5px;
+$mediumMargin: 10px;
+$bigMargin: $margin * 2; // 30px

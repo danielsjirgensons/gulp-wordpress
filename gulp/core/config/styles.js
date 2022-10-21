@@ -18,7 +18,7 @@ module.exports = deepMerge({
 			'!' + assets.src + '/scss/**/*_tmp\\d+.scss'
 		],
 		src:   [
-			assets.src + '/scss/*.scss',
+			assets.src + '/scss/**/*.scss',
 			'!' + assets.src + '/scss/**/_*'
 		],
 		dest:  assets.dest + '/css',
