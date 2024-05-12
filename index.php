@@ -1,22 +1,22 @@
 <?php
-get_header();
+    get_header();
 ?>
-<main>
-	<?php
-	while (have_posts()) : the_post();
-	?>
+    <main>
+        <?php
+            while ( have_posts() ) : the_post();
+                ?>
 
-		<section>
-			<?php the_title('<h1>', '</h1>'); ?>
+                <section>
+                    <?php the_title( '<h1>', '</h1>' ); ?>
 
-			<?php
-			the_content();
-			?>
-		</section>
+                    <?php
+                        the_content();
+                    ?>
+                </section>
 
-	<?php
-	endwhile; // End of the loop.
-	?>
-</main>
+            <?php
+            endwhile; // End of the loop.
+        ?>
+    </main>
 <?php
-get_footer();
+    get_footer();
