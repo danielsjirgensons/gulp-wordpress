@@ -1,7 +1,7 @@
 <?php
 
     class Config {
-        protected static object $_instance;
+        protected static $_instance = null;
 
         public static function instance(): ?Config {
             if ( is_null( self::$_instance ) ) {

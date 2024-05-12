@@ -18,7 +18,7 @@
     /**
      * Initialize required includes
      * */
-    require_once THEMEDIR . 'app/autoload.php';
+    require_once THEMEDIR . '/app/autoload.php';
     require_once THEMEDIR . '/app/helpers.php';
 
     /**
