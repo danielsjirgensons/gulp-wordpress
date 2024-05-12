@@ -20,19 +20,27 @@
             add_action( 'wp_enqueue_scripts', [ $this, 'theme_script_load' ] );
             add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_scripts' ], 100 );
             add_filter( 'upload_mimes', [ $this, 'cc_mime_types' ] );
-            add_action( 'widgets_init', [ $this, 'theme_widgets' ] );
+            // add_action( 'widgets_init', [ $this, 'theme_widgets' ] );
             // Remove useful actions
             remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
             remove_action( 'wp_print_styles', 'print_emoji_styles' );
+            remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+            remove_action( 'admin_print_styles', 'print_emoji_styles' );
         }
 
         /**
          * Theme support actions
          * */
         public function theme_support(): void {
-            add_theme_support( 'post-thumbnails' );
-            add_theme_support( 'custom-logo' );
-            add_theme_support( 'widgets' );
+            add_theme_support( 'post-thumbnails' ); // Post featured images
+            add_theme_support( 'custom-logo' ); // Custom logo
+            add_theme_support( 'widgets' ); // Widgets
+            load_theme_textdomain( 'theme', get_template_directory() . '/languages' ); // Translations
+            add_theme_support( 'html5', [ 'script', 'style' ] ); // HTML5
+
+            // Removing useless options
+            remove_image_size( '1536x1536' );
+            remove_image_size( '2048x2048' );
         }
 
         /**
@@ -50,8 +58,7 @@
          * */
         public function dequeue_scripts(): void {
             // Styles
-            // wp_deregister_style('wp-block-library');
-            // wp_deregister_style('rank-math');
+            // wp_deregister_style('handle');
             // Scripts
         }
 
