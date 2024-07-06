@@ -5,6 +5,7 @@
     const THEMEDIR = __DIR__;
 
     define( 'DIRURL', get_stylesheet_directory_uri() );
+    const ASSETS_URL = DIRURL . '/assets';
     define( 'VERSIONS', ( wp_get_environment_type() === 'local' ) ? time() : wp_get_theme()->get( 'Version' ) );
     define( 'PRODUCTION', wp_get_environment_type() !== 'local' );
 

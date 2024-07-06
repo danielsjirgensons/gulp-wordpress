@@ -10,6 +10,7 @@ const App = {
 		function initGeneral() {
 			return new General();
 		}
+
 		initGeneral();
 	}
 

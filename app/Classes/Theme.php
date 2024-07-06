@@ -2,8 +2,8 @@
 
     class Theme {
         protected static $_instance = null;
-        public string $css_path = DIRURL . '/assets/style/';
-        public string $js_path = DIRURL . '/assets/js';
+        public string $css_path = ASSETS_URL . '/style/';
+        public string $js_path = ASSETS_URL . '/js';
 
         public static function instance(): ?Theme {
             if ( is_null( self::$_instance ) ) {
@@ -55,9 +55,9 @@
          * */
         public function theme_script_load(): void {
             // Styles
-            wp_enqueue_style( 'theme', $this->css_path . 'main.css', '', VERSIONS );
+            wp_enqueue_style( 'main', $this->css_path . 'main.css', '', VERSIONS );
             // Scripts
-            wp_enqueue_script( 'app', $this->js_path . 'app.js', '', VERSIONS, true );
+            wp_enqueue_script( 'main', $this->js_path . 'main.js', '', VERSIONS, true );
         }
 
         /**

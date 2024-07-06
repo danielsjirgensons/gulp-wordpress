@@ -1,4 +1,3 @@
-
 class General {
 	constructor() {
 		this.testVariable = 'script working';
