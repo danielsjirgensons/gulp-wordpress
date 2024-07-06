@@ -11,8 +11,8 @@ vendor/
 
 # Project
 .sass-cache
-assets/
 bower_components/
 node_modules/
+package-lock.json
 
 _RESSOURCES/
