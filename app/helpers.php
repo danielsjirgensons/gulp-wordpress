@@ -17,7 +17,7 @@
     /**
      * Debug function for data output
      * */
-    function pre( $output, $dump = false ) {
+    function pre( $output, $dump = false ): void {
         echo '<pre>';
         if ( $dump ) {
             var_dump( $output );
