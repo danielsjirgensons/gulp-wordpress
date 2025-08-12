@@ -1,8 +1,7 @@
-var webpack   = require('webpack');
+const webpack = require('webpack');
 
 // utils
-var deepMerge = require('../core/utils/deepMerge');
-
+const deepMerge = require('../core/utils/deepMerge');
 
 /**
  * Return a new object extended
@@ -16,7 +15,7 @@ var deepMerge = require('../core/utils/deepMerge');
  * @returns {*}
  */
 function addKey(obj, key, value) {
-	var temp = {};
+	const temp = {};
 	temp[key] = value;
 	return Object.assign({}, obj, temp);
 }
@@ -36,7 +35,6 @@ function setProvider(scripts, script) {
 		: scripts;
 }
 
-
 /**
  * Return an object mapping a package
  * to a given global variable
@@ -51,7 +49,6 @@ function setExternal(scripts, script) {
 		: scripts;
 }
 
-
 /**
  * Make sure the given script is
  * valid
@@ -62,7 +59,6 @@ function setExternal(scripts, script) {
 function hasValidConfig(script) {
 	return script.package && (script.local || script.global);
 }
-
 
 /**
  * Explode script configs with an
@@ -78,16 +74,15 @@ function extractNestedConfig(scripts, script) {
 	return scripts.concat(
 		Array.isArray(script.local)
 			? script.local.reduce(function (extracted, local) {
-					return extracted.concat({
-						local: local,
-						global: script.global,
-						package: script.package
-					});
-				}, [])
+				return extracted.concat({
+					local: local,
+					global: script.global,
+					package: script.package
+				});
+			}, [])
 			: script
 	);
 }
-
 
 /**
  * Return a decorator for the scripts
@@ -117,29 +112,35 @@ function extractNestedConfig(scripts, script) {
 module.exports = function provideScripts(scripts) {
 	scripts = scripts || [];
 
-	var validScripts = scripts
+	const validScripts = scripts
 		.filter(hasValidConfig)
 		.reduce(extractNestedConfig, []);
 
 	return function provideTo(config) {
 		config = config || {};
 
-		var externals = validScripts.reduce(setExternal, {});
-		var providers = validScripts.reduce(setProvider, {});
+		const externals = validScripts.reduce(setExternal, {
+			$: "jquery",
+			jQuery: "jquery"
+		});
+		const providers = validScripts.reduce(setProvider, {
+			$: "jquery",
+			jQuery: "jquery"
+		});
 
 		return validScripts.length
 			? deepMerge({
-					options: {
-						webpack: {
-							defaults: {
-								externals: externals,
-								plugins: providers
-									? [new webpack.ProvidePlugin(providers)]
-									: []
-							}
+				options: {
+					webpack: {
+						defaults: {
+							externals: externals,
+							plugins: providers
+								? [new webpack.ProvidePlugin(providers)]
+								: []
 						}
 					}
-				}, config)
+				}
+			}, config)
 			: config;
 	};
 };

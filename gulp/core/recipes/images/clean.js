@@ -1,8 +1,7 @@
-var del = require('del');
+const del = require('del');
 
 // config
-var config = require('../../config/images');
-
+const config = require('../../config/images');
 
 /**
  * Delete all images

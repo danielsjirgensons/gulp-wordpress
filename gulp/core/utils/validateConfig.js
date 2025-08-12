@@ -1,6 +1,6 @@
-var log 	 = require('fancy-log');
-var path  	 = require('path');
-var c 		 = require('ansi-colors');
+const log = require('fancy-log');
+const path = require('path');
+const c = require('ansi-colors');
 
 /**
  * Validate the options passed
@@ -9,8 +9,7 @@ var c 		 = require('ansi-colors');
  * @param project
  */
 module.exports = function (project) {
-	var validationFailed = false;
-
+	let validationFailed = false;
 
 	/**
 	 * Safely handle missing
@@ -33,7 +32,7 @@ module.exports = function (project) {
 	 * Safely handle misconfigured
 	 * project name
 	 */
-	var devThemeRoot = path.basename(path.resolve('./'));
+	const devThemeRoot = path.basename(path.resolve('./'));
 	if (project.name === devThemeRoot) {
 		validationFailed = true;
 

@@ -1,20 +1,19 @@
-var gulp        = require('gulp');
-var plumber     = require('gulp-plumber');
-var svgSprite   = require('gulp-svg-sprite');
-var svgmin      = require('gulp-svgmin');
-var log 		= require('fancy-log');
-var path        = require('path');
-var mergeStream = require('merge-stream');
-var notify      = require('gulp-notify');
-var browserSync = require('browser-sync');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const svgSprite = require('gulp-svg-sprite');
+const svgmin = require('gulp-svgmin');
+const log = require('fancy-log');
+const path = require('path');
+const mergeStream = require('merge-stream');
+const notify = require('gulp-notify');
+const browserSync = require('browser-sync');
 
 // utils
-var getFolders  = require('../../utils/getFolders');
-var pumped      = require('../../utils/pumped');
+const getFolders = require('../../utils/getFolders');
+const pumped = require('../../utils/pumped');
 
 // config
-var config      = require('../../config/sprite');
-
+const config = require('../../config/sprite');
 
 /**
  * Create single svg sprite given
@@ -30,7 +29,7 @@ function spriteTask(name, src) {
 
 		.pipe(svgSprite(config.options.svgSprite(name)))
 
-		.on('error', function(error) {
+		.on('error', function (error) {
 			notify({
 				"message": "Error on Sprite creation"
 			});
@@ -50,11 +49,11 @@ function spriteTask(name, src) {
  *
  */
 module.exports = function () {
-	var subDirs = getFolders(config.paths.src).map(function (folder) {
+	const subDirs = getFolders(config.paths.src).map(function (folder) {
 		return spriteTask(folder, path.join(config.paths.src, folder, '/**/*.svg'));
 	});
 
-	var root = spriteTask('default', path.join(config.paths.src, '/*.svg'));
+	const root = spriteTask('default', path.join(config.paths.src, '/*.svg'));
 
 	return mergeStream(subDirs, root)
 		.pipe(notify({

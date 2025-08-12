@@ -1,8 +1,7 @@
-var gulp   = require('gulp');
+const gulp = require('gulp');
 
 // config
-var config = require('../../config/sprite');
-
+const config = require('../../config/sprite');
 
 /**
  * Watch svg sprite files

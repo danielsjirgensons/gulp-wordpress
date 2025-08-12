@@ -4,11 +4,12 @@
  * it is invoked and caches
  * it for future re-use
  *
+ * @param require
  * @param path
  * @returns {Function}
  */
 module.exports = function (require, path) {
-	var worker = '';
+	let worker = '';
 
 	return function (a, b, c, d, e, f, g) {
 		if (!worker) {

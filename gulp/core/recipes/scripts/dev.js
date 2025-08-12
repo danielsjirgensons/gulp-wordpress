@@ -1,20 +1,19 @@
-var gulp         = require('gulp');
-var plumber      = require('gulp-plumber');
-var named        = require('vinyl-named');
-var webpack 	 = require('webpack');
-var gulpWebpack  = require('webpack-stream');
-var browserSync  = require('browser-sync');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const named = require('vinyl-named');
+const webpack = require('webpack');
+const gulpWebpack = require('webpack-stream');
+const browserSync = require('browser-sync');
 
 // utils
-var deepMerge    = require('../../utils/deepMerge');
-var logStats     = require('../../utils/webpackLogStats');
-var notifaker    = require('../../utils/notifaker');
-var pumped       = require('../../utils/pumped');
-var notify       = require('gulp-notify');
+const deepMerge = require('../../utils/deepMerge');
+const logStats = require('../../utils/webpackLogStats');
+const notifaker = require('../../utils/notifaker');
+const pumped = require('../../utils/pumped');
+const notify = require('gulp-notify');
 
 // config
-var config       = require('../../config/scripts');
-
+const config = require('../../config/scripts');
 
 /**
  * Create JS packages
@@ -27,7 +26,7 @@ module.exports = function () {
 		.pipe(plumber())
 
 		.pipe(named()) 	// vinyl-named is used to allow for
-						// multiple entry files
+		// multiple entry files
 		.pipe(gulpWebpack(
 			deepMerge(
 				config.options.webpack.defaults,

@@ -1,13 +1,12 @@
-var gulp         = require('gulp');
-var plumber      = require('gulp-plumber');
-var notify       = require('gulp-notify');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const notify = require('gulp-notify');
 
 // utils
-var pumped       = require('../../utils/pumped');
+const pumped = require('../../utils/pumped');
 
 // config
-var config       = require('../../config/fonts');
-
+const config = require('../../config/fonts');
 
 /**
  * Move Fonts to
@@ -15,7 +14,7 @@ var config       = require('../../config/fonts');
  *
  */
 module.exports = function () {
-	return gulp.src(config.paths.src, {encoding: false})
+	return gulp.src(config.paths.src, { encoding: false })
 		.pipe(plumber())
 
 		.pipe(gulp.dest(config.paths.dest))

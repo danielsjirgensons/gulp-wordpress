@@ -1,8 +1,7 @@
-var del = require('del');
+const del = require('del');
 
 // config
-var config = require('../../config/fonts');
-
+const config = require('../../config/fonts');
 
 /**
  * Delete all font files

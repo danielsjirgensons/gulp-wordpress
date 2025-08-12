@@ -1,6 +1,6 @@
-var log 	 	= require('fancy-log');
-var callingDone = false;
-var defaultStatsOptions = {
+const log = require('fancy-log');
+let callingDone = false;
+const defaultStatsOptions = {
 	hash: false,
 	timings: false,
 	chunks: false,
@@ -41,7 +41,7 @@ module.exports = function (err, stats, options) {
 	if (options.verbose) {
 		log(stats.toString());
 	} else {
-		var statsOptions = options && options.stats || {};
+		const statsOptions = options && options.stats || {};
 
 		Object.keys(defaultStatsOptions).forEach(function (key) {
 			if (typeof statsOptions[key] === 'undefined') {

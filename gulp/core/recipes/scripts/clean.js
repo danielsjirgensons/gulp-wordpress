@@ -1,8 +1,7 @@
-var del = require('del');
+const del = require('del');
 
 // config
-var config = require('../../config/scripts');
-
+const config = require('../../config/scripts');
 
 /**
  * Delete all JS files

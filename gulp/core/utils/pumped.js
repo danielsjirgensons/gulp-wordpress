@@ -7,7 +7,7 @@
  * @param achievement
  */
 module.exports = function (achievement) {
-	var exclamations = [
+	const exclamations = [
 		'Sweet',
 		'Awesome',
 		'Epic',
@@ -18,7 +18,7 @@ module.exports = function (achievement) {
 		'Booyah'
 	];
 
-	var randomIndex = Math.floor(Math.random() * exclamations.length);
+	const randomIndex = Math.floor(Math.random() * exclamations.length);
 
 	return [exclamations[randomIndex], '! ', achievement].join('');
 };

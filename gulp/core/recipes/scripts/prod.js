@@ -1,16 +1,16 @@
-var gulp         = require('gulp');
-var plumber      = require('gulp-plumber');
-var named        = require('vinyl-named');
-var webpack 	 = require('webpack');
-var gulpWebpack  = require('webpack-stream');
-var notify       = require('gulp-notify');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const named = require('vinyl-named');
+const webpack = require('webpack');
+const gulpWebpack = require('webpack-stream');
+const notify = require('gulp-notify');
 
 // utils
-var deepMerge    = require('../../utils/deepMerge');
-var pumped       = require('../../utils/pumped');
+const deepMerge = require('../../utils/deepMerge');
+const pumped = require('../../utils/pumped');
 
 // config
-var config       = require('../../config/scripts');
+const config = require('../../config/scripts');
 
 /**
  * Create minified JS
@@ -23,7 +23,7 @@ module.exports = function () {
 		.pipe(plumber())
 
 		.pipe(named()) // vinyl-named is used to allow for
-									 // multiple entry files
+		// multiple entry files
 		.pipe(gulpWebpack(
 			deepMerge(
 				config.options.webpack.defaults,

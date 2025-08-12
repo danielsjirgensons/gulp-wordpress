@@ -1,8 +1,8 @@
 // utils
-var deepMerge = require('../utils/deepMerge');
+const deepMerge = require('../utils/deepMerge');
 
 // config
-var assets = require('./common').paths.assets;
+const assets = require('./common').paths.assets;
 
 /**
  * Image Building
@@ -14,14 +14,14 @@ var assets = require('./common').paths.assets;
 module.exports = deepMerge({
 	paths: {
 		watch: [
-			assets.src + '/img/**/*.{gif,ico,jpg,jpeg,png,webp}',
-			'!' + assets.src + '/img/sprites'
+			assets.src + '/images/**/*.{gif,ico,jpg,jpeg,png,webp}',
+			'!' + assets.src + '/images/sprites'
 		],
-		src:   [
-			assets.src + '/img/**/*.{gif,ico,jpg,jpeg,png,webp}',
-			'!' + assets.src + '/img/sprites'
+		src: [
+			assets.src + '/images/**/*.{gif,ico,jpg,jpeg,png,webp}',
+			'!' + assets.src + '/images/sprites'
 		],
-		dest:  assets.dest + '/img',
-		clean: assets.dest + '/img/**/*.{gif,ico,jpg,jpeg,png,webp}'
+		dest: assets.dest + '/images',
+		clean: assets.dest + '/images/**/*.{gif,ico,jpg,jpeg,png,webp}'
 	}
 });

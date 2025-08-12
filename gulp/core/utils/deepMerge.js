@@ -1,5 +1,4 @@
-var lodash = require('lodash');
-
+const lodash = require('lodash');
 
 /**
  * Simple lodash wrapper to

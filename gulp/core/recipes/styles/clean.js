@@ -1,8 +1,7 @@
-var del = require('del');
+const del = require('del');
 
 // config
-var config = require('../../config/styles');
-
+const config = require('../../config/styles');
 
 /**
  * Delete all CSS and SourceMap

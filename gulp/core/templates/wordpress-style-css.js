@@ -1,6 +1,6 @@
-var project = require('../../../project.config');
+const project = require('../../../project.config');
 
-var possibleOptions = {
+let possibleOptions = {
 	name: 'Text Domain',
 	prettyName: 'Theme Name',
 	themeURI: 'Theme URI',
@@ -13,10 +13,10 @@ var possibleOptions = {
 	licenseURI: 'License URI',
 	tags: 'Tags'
 };
-var options = [];
-var value;
+const options = [];
+let value;
 
-for (var optionKey in possibleOptions) {
+for (const optionKey in possibleOptions) {
 	if (possibleOptions.hasOwnProperty(optionKey) && project.hasOwnProperty(optionKey)) {
 		value = project[optionKey];
 		if (Array.isArray(value)) {
