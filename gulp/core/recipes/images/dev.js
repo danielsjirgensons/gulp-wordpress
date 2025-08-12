@@ -19,38 +19,38 @@ const config = require('../../config/images');
 module.exports = function () {
 	return gulp.src(config.paths.src)
 		.pipe(plumber())
-		.pipe(
-		// squoosh(({ width, height, size, filePath }) => {
-		// 	let options = {
-		// 		encodeOptions: { mozjpeg: {} }
-		// 	};
-		//
-		// 	if (path.extname(filePath) === '.jpg') {
-		// 		options = {
-		// 			encodeOptions: {
-		// 				webp: {},
-		// 				mozjpeg: {},
-		// 			},
+		// .pipe(
+		// 	squoosh(({ width, height, size, filePath }) => {
+		// 		let options = {
+		// 			encodeOptions: { mozjpeg: {} }
 		// 		};
-		// 	}
-		//
-		// 	if (path.extname(filePath) === '.png') {
-		// 		options = {
-		// 			encodeOptions: {
-		// 				oxipng: {},
-		// 			},
-		// 			preprocessOptions: {
-		// 				quant: {
-		// 					enabled: true,
-		// 					numColors: 16,
+
+		// 		if (path.extname(filePath) === '.jpg') {
+		// 			options = {
+		// 				encodeOptions: {
+		// 					webp: {},
+		// 					mozjpeg: {},
 		// 				},
-		// 			},
-		// 		};
-		// 	}
-		//
-		// 	return options;
-		// })
-	)
+		// 			};
+		// 		}
+
+		// 		if (path.extname(filePath) === '.png') {
+		// 			options = {
+		// 				encodeOptions: {
+		// 					oxipng: {},
+		// 				},
+		// 				preprocessOptions: {
+		// 					quant: {
+		// 						enabled: true,
+		// 						numColors: 16,
+		// 					},
+		// 				},
+		// 			};
+		// 		}
+
+		// 		return options;
+		// 	})
+		// )
 		.pipe(gulp.dest(config.paths.dest))
 		.pipe(notify({
 			"message": pumped("Images Moved"),

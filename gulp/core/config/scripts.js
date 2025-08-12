@@ -45,26 +45,42 @@ module.exports = deepMerge({
 			// PRODUCTION BUILD
 			prod: {
 				mode: 'production',
-				devtool: false,
+				devtool: false, // No source maps for prod to reduce bundle size
 				optimization: {
 					minimize: true,
-					sideEffects: false,
-					usedExports: true,
+					sideEffects: true, // Enable tree shaking for packages with sideEffects flag
+					usedExports: true, // Enable tree shaking
+					concatenateModules: true, // Module concatenation for faster runtime execution
 					minimizer: [
 						new TerserPlugin({
 							terserOptions: {
 								compress: {
-									drop_console: true,
-									pure_funcs: ['console.info', 'console.debug', 'console.warn', 'console.error']
+									drop_console: true, // Remove all console.* calls
+									pure_funcs: ['console.info', 'console.debug', 'console.warn', 'console.error'],
+									passes: 2, // Run multiple compress passes for better compression
+									drop_debugger: true, // Remove debugger statements
+									toplevel: true // Drop unused top-level vars and functions
 								},
-								output: { comments: false },
+								mangle: {
+									safari10: true, // Workaround Safari 10 bugs
+								},
+								output: {
+									comments: false,
+									beautify: false
+								},
 								keep_fnames: false,
 								keep_classnames: false
 							},
 							extractComments: false,
-							parallel: true
+							parallel: true,
+							// cache: true // Optionally enable caching if build speed is an issue
 						})
-					]
+					],
+				},
+				performance: {
+					hints: 'warning', // Show warnings on large asset sizes (optional)
+					maxEntrypointSize: 512000, // 500kb, adjust based on your needs
+					maxAssetSize: 512000,
 				}
 			},
 
@@ -74,46 +90,96 @@ module.exports = deepMerge({
 					extensions: ['.js', '.jsx', '.ts', '.tsx'],
 					alias: {
 						'lodash-es': 'lodash'
+					},
+					fallback: {
+						// Polyfills for node core modules if needed (webpack 5 no longer includes them)
+						// e.g., crypto: require.resolve('crypto-browserify'),
 					}
 				},
 				output: {
 					chunkFilename: 'chunk-[name].[contenthash].js',
-					clean: true
+					clean: true // Cleans output directory before emit
 				},
-				stats: { colors: true },
+				stats: {
+					colors: true,
+					assets: true,
+					modules: false, // optionally hide module info for cleaner output
+					entrypoints: true,
+					warnings: true,
+					errors: true
+				},
 				module: {
 					rules: [
 						{
 							test: /\.(js|jsx)$/,
 							exclude: /node_modules/,
-							loader: 'babel-loader',
-							options: {
-								presets: [
-									['@babel/preset-env', {
-										targets: {
-											esmodules: true
-										},
-										modules: false,
-										useBuiltIns: false // if you use core-js, you can set 'usage'
-									}],
-									'@babel/preset-react'
-								],
-								plugins: ['@babel/plugin-transform-runtime']
+							use: {
+								loader: 'babel-loader',
+								options: {
+									cacheDirectory: true, // Speeds up rebuilds by caching
+									presets: [
+										['@babel/preset-env', {
+											targets: {
+												esmodules: true
+											},
+											modules: false,
+											useBuiltIns: false // or 'usage' with core-js if needed
+										}],
+										'@babel/preset-react'
+									],
+									plugins: ['@babel/plugin-transform-runtime']
+								}
 							}
 						},
 						{
 							test: /\.(ts|tsx)$/,
-							use: 'ts-loader',
+							use: [
+								{
+									loader: 'ts-loader',
+									options: {
+										transpileOnly: true, // Improves speed, consider fork-ts-checker-webpack-plugin for type checks
+									}
+								}
+							],
 							exclude: /node_modules/
 						},
 						{
 							test: /swiper\.esm\.js/,
 							sideEffects: false
+						},
+						{
+							test: /\.(css|scss)$/, // Example for styles, add your loaders here if needed
+							use: [
+								'style-loader',
+								{
+									loader: 'css-loader',
+									options: {
+										sourceMap: true,
+									}
+								},
+								{
+									loader: 'postcss-loader',
+									options: {
+										postcssOptions: {
+											plugins: ['autoprefixer']
+										},
+										sourceMap: true
+									}
+								},
+								'sass-loader'
+							]
 						}
 					]
 				},
 				plugins: [
-					new ESLintPlugin({ failOnError: false })
+					new ESLintPlugin({
+						failOnError: false,
+						extensions: ['js', 'jsx', 'ts', 'tsx'],
+						emitWarning: true,
+						cache: true
+					}),
+					// Optionally add ForkTsCheckerWebpackPlugin for TypeScript type checking:
+					// new ForkTsCheckerWebpackPlugin()
 				],
 				externals: {
 					jquery: 'jQuery',
