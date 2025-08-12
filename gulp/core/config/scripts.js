@@ -1,11 +1,11 @@
-var TerserPlugin = require('terser-webpack-plugin');
-var ESLintPlugin = require('eslint-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 // utils
-var deepMerge = require('../utils/deepMerge');
+const deepMerge = require('../utils/deepMerge');
 
 // config
-var assets = require('./common').paths.assets;
+const assets = require('./common').paths.assets;
 
 /**
  * Script Building
@@ -18,7 +18,7 @@ module.exports = deepMerge({
 	paths: {
 		watch: assets.src + '/js/**/*.js',
 		src: [
-			assets.src + '/js/*.js',
+			assets.src + '/js/**/*.js',
 			'!' + assets.src + '/js/**/_*'
 		],
 		dest: assets.dest + '/js',
@@ -27,80 +27,100 @@ module.exports = deepMerge({
 
 	options: {
 		webpack: {
-
-			// merged with defaults
-			// for :watch task
+			// DEVELOPMENT
 			watch: {
 				mode: 'development',
-				cache: true,
+				cache: { type: 'filesystem' },
 				watch: true,
-				devtool: 'eval'
+				devtool: 'cheap-module-source-map'
 			},
 
-
-			// merged with defaults
-			// for :dev task
+			// DEVELOPMENT BUILD
 			dev: {
 				mode: 'development',
-				devtool: 'eval'
+				cache: { type: 'filesystem' },
+				devtool: 'cheap-module-source-map'
 			},
 
-
-			// merged with defaults
-			// for :prod task
+			// PRODUCTION BUILD
 			prod: {
 				mode: 'production',
+				devtool: false,
 				optimization: {
 					minimize: true,
+					sideEffects: false,
+					usedExports: true,
 					minimizer: [
 						new TerserPlugin({
 							terserOptions: {
-								output: {
-									comments: false,
+								compress: {
+									drop_console: true,
+									pure_funcs: ['console.info', 'console.debug', 'console.warn', 'console.error']
 								},
+								output: { comments: false },
+								keep_fnames: false,
+								keep_classnames: false
 							},
 							extractComments: false,
+							parallel: true
 						})
 					]
 				}
 			},
 
+			// DEFAULT SETTINGS (MERGED WITH ALL BUILDS)
 			defaults: {
 				resolve: {
-					extensions: ['.js', '.jsx', '.ts', '.tsx']
+					extensions: ['.js', '.jsx', '.ts', '.tsx'],
+					alias: {
+						'lodash-es': 'lodash'
+					}
 				},
 				output: {
-					chunkFilename: 'chunk-[name].js'
+					chunkFilename: 'chunk-[name].[contenthash].js',
+					clean: true
 				},
-				stats: {
-					colors: true
-				},
+				stats: { colors: true },
 				module: {
 					rules: [
 						{
-							test: /\.m?js$/,
+							test: /\.(js|jsx)$/,
 							exclude: /node_modules/,
 							loader: 'babel-loader',
 							options: {
-								presets: ['@babel/preset-env'],
+								presets: [
+									['@babel/preset-env', {
+										targets: {
+											esmodules: true
+										},
+										modules: false,
+										useBuiltIns: false // if you use core-js, you can set 'usage'
+									}],
+									'@babel/preset-react'
+								],
 								plugins: ['@babel/plugin-transform-runtime']
 							}
 						},
 						{
-							test: /swiper\.esm\.js/, // force tree shaking for swiper js
+							test: /\.(ts|tsx)$/,
+							use: 'ts-loader',
+							exclude: /node_modules/
+						},
+						{
+							test: /swiper\.esm\.js/,
 							sideEffects: false
 						}
 					]
 				},
 				plugins: [
-					new ESLintPlugin({
-						failOnError: false
-					})
+					new ESLintPlugin({ failOnError: false })
 				],
 				externals: {
-					jquery: 'jQuery'
+					jquery: 'jQuery',
+					'window.jQuery': 'jQuery'
 				}
 			}
+
 		}
 	}
 });
