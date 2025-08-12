@@ -23,5 +23,8 @@ module.exports = deepMerge({
 		],
 		dest: assets.dest + '/images',
 		clean: assets.dest + '/images/**/*.{gif,ico,jpg,jpeg,png,webp}'
+	},
+	options: {
+		
 	}
 });
