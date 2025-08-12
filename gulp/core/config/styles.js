@@ -30,14 +30,16 @@ module.exports = deepMerge({
             implementation: require('sass'), // Use dart-sass for performance
             precision: 5, // Ensures accurate decimal calculations
             includePaths: ['node_modules', assets.src + '/scss'], // Allow SCSS imports from both npm and project
-            cache: true // Enable caching for faster builds
+            quietDeps: true, // Hide noisy dependency warnings
         },
         autoprefixer: {
             overrideBrowserslist: [
+                '> 0.5%',
                 'last 2 versions',
-                '> 1%',
+                'Firefox ESR',
                 'not dead'
-            ]
+            ],
+            grid: 'autoplace' // Adds better CSS Grid prefixing
         },
         minify: {
             preset: [
