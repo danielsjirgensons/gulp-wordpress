@@ -45,6 +45,7 @@
     "fancy-log": "2.0.0",
     "gulp": "5.0.1",
     "gulp-filter": "9.0.0",
+    "gulp-imagemin": "^9.1.0",
     "gulp-notify": "^5.0.0",
     "gulp-plumber": "1.2.1",
     "gulp-postcss": "10.0.0",
