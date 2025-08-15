@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
-// TODO: var squoosh = require('gulp-squoosh');
+const sharpOptimizeImages = require('gulp-sharp-optimize-images').default;
 const notify = require('gulp-notify');
 const path = require('path');
 
@@ -19,48 +19,20 @@ const config = require('../../config/images');
 module.exports = function () {
 	return gulp.src(config.paths.src)
 		.pipe(plumber())
+		.pipe(
+			sharpOptimizeImages({
+				logLevel: '',
+				// JPEGs > JPEG + WebP
+				jpg_to_jpg: config.options.jpgOptions,
+				webp: config.options.webpOptions,
 
-		// .pipe(
-		// 	squoosh(({ width, height, size, filePath }) => ({
-		// 		encodeOptions: {
-		// 			...(path.extname(filePath) === ".png" ? { oxipng: {} } : { mozjpeg: {}, webp: {} }),
-		// 		},
-		// 	}))
-		// )
+				// PNGs > PNG + WebP
+				png_to_png: config.options.pngOptions,
 
-		// .pipe(
-		// 	squoosh(({ width, height, size, filePath }) => {
-		// 		let options = {
-		// 			encodeOptions: { mozjpeg: {} }
-		// 		};
-		//
-		// 		if (path.extname(filePath) === '.jpg') {
-		// 			options = {
-		// 				encodeOptions: {
-		// 					webp: {},
-		// 					mozjpeg: {},
-		// 				},
-		// 			};
-		// 		}
-		//
-		// 		if (path.extname(filePath) === '.png') {
-		// 			options = {
-		// 				encodeOptions: {
-		// 					oxipng: {},
-		// 				},
-		// 				preprocessOptions: {
-		// 					quant: {
-		// 						enabled: true,
-		// 						numColors: 16,
-		// 					},
-		// 				},
-		// 			};
-		// 		}
-		//
-		// 		return options;
-		// 	})
-		// )
-
+				// AVIF output
+				// avif: config.options.avifOptions,
+			})
+		)
 		.pipe(gulp.dest(config.paths.dest))
 		.pipe(notify({
 			"message": pumped("Images Compressed"),

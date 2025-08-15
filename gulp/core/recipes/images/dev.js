@@ -1,48 +1,42 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
+const sharpOptimizeImages = require('gulp-sharp-optimize-images').default;
 const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
-const mergeStream = require('merge-stream');
+const path = require('path');
 
+// utils
 const pumped = require('../../utils/pumped');
+
+// config
 const config = require('../../config/images');
 
-module.exports = async function () {
-	const imagemin = (await import('gulp-imagemin')).default;
-	const imageminMozjpeg = (await import('imagemin-mozjpeg')).default;
-	const imageminOptipng = (await import('imagemin-optipng')).default;
-	const imageminGifsicle = (await import('imagemin-gifsicle')).default;
-	const imageminSvgo = (await import('imagemin-svgo')).default;
-
-	// JPG stream
-	const jpgStream = gulp.src(config.paths.src)
+/**
+ * Move Images to
+ * the built theme
+ *
+ */
+module.exports = function () {
+	return gulp.src(config.paths.src)
 		.pipe(plumber())
-		.pipe(imagemin([
-			imageminMozjpeg({ quality: 80 })
-		]))
-		.pipe(gulp.dest(config.paths.dest));
+		.pipe(
+			sharpOptimizeImages({
+				// JPEGs > JPEG + WebP
+				jpg_to_jpg: config.options.jpgOptions,
+				webp: config.options.webpOptions,
 
-	// PNG stream
-	const pngStream = gulp.src(config.paths.src)
-		.pipe(plumber())
-		.pipe(imagemin([
-			imageminOptipng({ optimizationLevel: 5 })
-		]))
-		.pipe(gulp.dest(config.paths.dest));
+				// PNGs > PNG + WebP
+				png_to_png: config.options.pngOptions,
 
-	// GIF/SVG stream
-	const gifSvgStream = gulp.src(config.paths.src)
-		.pipe(plumber())
-		.pipe(imagemin([
-			imageminGifsicle({ interlaced: true }),
-			imageminSvgo()
-		]))
-		.pipe(gulp.dest(config.paths.dest));
-
-	return mergeStream(jpgStream, pngStream, gifSvgStream)
+				// AVIF output
+				// avif: config.options.avifOptions,
+			})
+		)
+		.pipe(gulp.dest(config.paths.dest))
 		.pipe(notify({
-			message: pumped("Images optimized"),
-			onLast: true
+			"message": pumped("Images Moved"),
+			"onLast": true
 		}))
+
 		.on('end', browserSync.reload);
 };
