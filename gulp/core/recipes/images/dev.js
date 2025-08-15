@@ -1,14 +1,14 @@
-var gulp         = require('gulp');
-var plumber      = require('gulp-plumber');
-var notify       = require('gulp-notify');
-var browserSync  = require('browser-sync');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const sharpOptimizeImages = require('gulp-sharp-optimize-images').default;
+const notify = require('gulp-notify');
+const browserSync = require('browser-sync');
 
 // utils
-var pumped       = require('../../utils/pumped');
+const pumped = require('../../utils/pumped');
 
 // config
-var config       = require('../../config/images');
-
+const config = require('../../config/images');
 
 /**
  * Move Images to
@@ -18,7 +18,19 @@ var config       = require('../../config/images');
 module.exports = function () {
 	return gulp.src(config.paths.src)
 		.pipe(plumber())
+		.pipe(
+			sharpOptimizeImages({
+				// JPEGs > JPEG + WebP
+				jpg_to_jpg: config.options.jpgOptions,
+				webp: config.options.webpOptions,
 
+				// PNGs > PNG + WebP
+				png_to_png: config.options.pngOptions,
+
+				// AVIF output
+				// avif: config.options.avifOptions,
+			})
+		)
 		.pipe(gulp.dest(config.paths.dest))
 		.pipe(notify({
 			"message": pumped("Images Moved"),

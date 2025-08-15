@@ -1,8 +1,7 @@
-var gulp   = require('gulp');
+const gulp = require('gulp');
 
 // config
-var config = require('../../config/images');
-
+const config = require('../../config/images');
 
 /**
  * Watch image files

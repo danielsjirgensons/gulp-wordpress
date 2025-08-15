@@ -1,8 +1,8 @@
 // utils
-var deepMerge = require('../utils/deepMerge');
+const deepMerge = require('../utils/deepMerge');
 
 // config
-var assets = require('./common').paths.assets;
+const assets = require('./common').paths.assets;
 
 /**
  * Svg Building
@@ -29,7 +29,18 @@ module.exports = deepMerge({
 	},
 
 	options: {
-		svgmin: {multipass: true}
+		svgmin: {
+			multipass: true, // Run minification multiple times for the best results
+			plugins: [
+				{ name: 'preset-default' }, // Use the default preset
+				{ name: 'removeTitle' }, // Remove <title> elements
+				{ name: 'removeDesc' }, // Remove <desc> elements
+				{ name: 'removeMetadata' }, // Remove metadata
+				{ name: 'cleanupAttrs' }, // Clean up redundant or unnecessary attributes
+				{ name: 'removeUselessDefs' }, // Remove unused <defs> elements
+				{ name: 'removeXMLProcInst' }, // Remove XML processing instructions
+				{ name: 'removeComments' } // Remove comments
+			]
+		}
 	}
-
 });

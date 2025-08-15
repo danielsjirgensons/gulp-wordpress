@@ -1,19 +1,18 @@
-var gulp         = require('gulp');
-var plumber      = require('gulp-plumber');
-var named        = require('vinyl-named');
-var webpack 	 = require('webpack');
-var gulpWebpack  = require('webpack-stream');
-var browserSync  = require('browser-sync');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const named = require('vinyl-named');
+const webpack = require('webpack');
+const gulpWebpack = require('webpack-stream');
+const browserSync = require('browser-sync');
 
 // utils
-var deepMerge    = require('../../utils/deepMerge');
-var logStats     = require('../../utils/webpackLogStats');
-var notifaker    = require('../../utils/notifaker');
-var pumped       = require('../../utils/pumped');
+const deepMerge = require('../../utils/deepMerge');
+const logStats = require('../../utils/webpackLogStats');
+const notifaker = require('../../utils/notifaker');
+const pumped = require('../../utils/pumped');
 
 // config
-var config       = require('../../config/scripts');
-
+const config = require('../../config/scripts');
 
 /**
  * Watch for changes
@@ -28,7 +27,7 @@ module.exports = function (done) {
 		.pipe(plumber())
 
 		.pipe(named()) // vinyl-named is used to allow for
-									 // multiple entry files
+		// multiple entry files
 		.pipe(gulpWebpack(
 			deepMerge(
 				config.options.webpack.defaults,
@@ -40,7 +39,7 @@ module.exports = function (done) {
 				// a package is updated
 				browserSync.reload();
 				notifaker(pumped('JS Packaged'));
-   	 		})
+			})
 		)
 		.pipe(gulp.dest(config.paths.dest));
 

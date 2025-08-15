@@ -1,5 +1,5 @@
-var bsConfig = require('../config/browser-sync');
-var port = bsConfig.port || 3000;
+const bsConfig = require('../config/browser-sync');
+const port = bsConfig.port || 3000;
 
 module.exports = [
 	'\n\n\n',

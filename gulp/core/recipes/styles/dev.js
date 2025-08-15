@@ -1,21 +1,21 @@
-var gulp         = require('gulp');
-var filter       = require('gulp-filter');
-var plumber      = require('gulp-plumber');
-var sourcemaps   = require('gulp-sourcemaps');
-var sass         = require('gulp-sass')(require('sass'));
-var notify       = require('gulp-notify');
-var browserSync  = require('browser-sync');
-var autoprefixer = require('autoprefixer');
-var postcss      = require('gulp-postcss');
+const gulp = require('gulp');
+const filter = require('gulp-filter');
+const plumber = require('gulp-plumber');
+const sourcemaps = require('gulp-sourcemaps');
+const sass = require('gulp-sass')(require('sass'));
+const notify = require('gulp-notify');
+const browserSync = require('browser-sync');
+const autoprefixer = require('autoprefixer');
+const postcss = require('gulp-postcss');
 
 // config
-var config       = require('../../config/styles');
+const config = require('../../config/styles');
 
 // utils
-var pumped       = require('../../utils/pumped');
+const pumped = require('../../utils/pumped');
 
 // postcss
-var plugins = [
+const plugins = [
 	autoprefixer(config.options.autoprefixer)
 ];
 
@@ -27,15 +27,15 @@ var plugins = [
  *
  *
  */
-module.exports = function (cb) {
-	var filterCSS = filter('**/*.css', { restore: true });
+module.exports = function () {
+	const filterCSS = filter('**/*.css', { restore: true });
 
 	return gulp.src(config.paths.src)
 		.pipe(plumber())
 
 		.pipe(sourcemaps.init())
 		.pipe(sass.sync(config.options.sass))
-		.on('error', function(error) {
+		.on('error', function (error) {
 			notify().write(error);
 			this.emit('end');
 		})
@@ -45,9 +45,9 @@ module.exports = function (cb) {
 		.pipe(gulp.dest(config.paths.dest))
 
 		.pipe(filterCSS) // sourcemaps adds `.map` files to the gulp
-						 // stream, but we only want to trigger
-						 // Browser-sync on CSS files so we need to
-						 // filter the stream for the css files
+		// stream, but we only want to trigger
+		// Browser-sync on CSS files so we need to
+		// filter the stream for the css files
 		.pipe(browserSync.reload({ stream: true }))
 		.pipe(filterCSS.restore)
 

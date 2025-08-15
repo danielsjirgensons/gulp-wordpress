@@ -1,6 +1,6 @@
-var notifier = require('node-notifier');
-var log 	 = require('fancy-log');
-var c 		 = require('ansi-colors');
+const notifier = require('node-notifier');
+const log = require('fancy-log');
+const c = require('ansi-colors');
 
 /**
  * Fake the gulp-notfy functionality

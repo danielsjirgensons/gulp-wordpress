@@ -1,8 +1,7 @@
-var del = require('del');
+const del = require('del');
 
 // config
-var config = require('../../config/svg');
-
+const config = require('../../config/svg');
 
 /**
  * Delete all svgs

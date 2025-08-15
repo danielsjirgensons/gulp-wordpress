@@ -1,6 +1,6 @@
 module.exports = function (filename, definitions) {
 
-	var preservedDefs = (
+	const preservedDefs = (
 		definitions && definitions.length
 			? ' * ' + definitions.join('\n * ') + '\n *'
 			: ' *'

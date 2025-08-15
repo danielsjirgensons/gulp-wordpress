@@ -1,8 +1,7 @@
-var gulp   = require('gulp');
+const gulp = require('gulp');
 
 // config
-var config = require('../../config/styles');
-
+const config = require('../../config/styles');
 
 /**
  * Watch style files
