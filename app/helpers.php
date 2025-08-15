@@ -16,8 +16,13 @@
 
     /**
      * Debug function for data output
-     * */
-    function pre( $output, $dump = false ): void {
+     *
+     * @param mixed $output
+     * @param bool  $dump
+     *
+     * @return void
+     */
+    function pre( mixed $output, bool $dump = false ): void {
         echo '<pre>';
         if ( $dump ) {
             var_dump( $output );

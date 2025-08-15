@@ -27,7 +27,7 @@ const plugins = [
  *
  *
  */
-module.exports = function (cb) {
+module.exports = function () {
 	const filterCSS = filter('**/*.css', { restore: true });
 
 	return gulp.src(config.paths.src)

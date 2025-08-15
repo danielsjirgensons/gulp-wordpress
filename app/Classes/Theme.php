@@ -1,12 +1,12 @@
 <?php
 
     class Theme {
-        protected static $_instance = null;
+        private static $_instance = null;
         public string $css_path = ASSETS_URL . '/style/';
         public string $js_path = ASSETS_URL . '/js';
 
-        public static function instance(): ?Theme {
-            if ( is_null( self::$_instance ) ) {
+        public static function instance(): self|null {
+            if ( self::$_instance === null ) {
                 self::$_instance = new self();
             }
 
@@ -65,8 +65,9 @@
          * */
         public function dequeue_scripts(): void {
             // Styles
-            // wp_deregister_style('handle');
+            //wp_dequeue_style( 'handle' );
             // Scripts
+            //wp_dequeue_script( 'handle' );
         }
 
         /**
@@ -100,9 +101,14 @@
 
         /**
          * Add custom file type upload
+         *
+         * @param array $mimes
+         * *
+         * * @return array
          * */
-        public function cc_mime_types( $mimes ) {
-            $mimes['svg'] = 'image/svg+xml';
+        public function cc_mime_types( array $mimes ): array {
+            $mimes['svg']  = 'image/svg'; // standard
+            $mimes['svgz'] = 'image/svg+xml'; // compressed SVG
 
             return $mimes;
         }

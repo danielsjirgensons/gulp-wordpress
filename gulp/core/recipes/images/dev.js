@@ -3,7 +3,6 @@ const plumber = require('gulp-plumber');
 const sharpOptimizeImages = require('gulp-sharp-optimize-images').default;
 const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
-const path = require('path');
 
 // utils
 const pumped = require('../../utils/pumped');

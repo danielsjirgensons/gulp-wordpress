@@ -5,12 +5,12 @@ no-mixed-spaces-and-tabs: 0,
 no-multiple-empty-lines: 0
 */
 
-var gulp  = require('gulp');
-var log = require('fancy-log');
-var c = require('ansi-colors');
+const gulp = require('gulp');
+const log = require('fancy-log');
+const c = require('ansi-colors');
 
 // utils
-var lazyQuire      = require('./gulp/core/utils/lazyQuire');
+const lazyQuire = require('./gulp/core/utils/lazyQuire');
 
 // gulpfile booting message
 log(c.green('Starting Gulp! Please wait...'));

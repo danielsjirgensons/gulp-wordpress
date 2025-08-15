@@ -10,7 +10,6 @@ const deepMerge = require('../../utils/deepMerge');
 const logStats = require('../../utils/webpackLogStats');
 const notifaker = require('../../utils/notifaker');
 const pumped = require('../../utils/pumped');
-const notify = require('gulp-notify');
 
 // config
 const config = require('../../config/scripts');

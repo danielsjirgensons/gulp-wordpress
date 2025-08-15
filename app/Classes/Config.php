@@ -1,10 +1,10 @@
 <?php
 
     class Config {
-        protected static $_instance = null;
+        private static $_instance = null;
 
-        public static function instance(): ?Config {
-            if ( is_null( self::$_instance ) ) {
+        public static function instance(): self|null {
+            if ( self::$_instance === null ) {
                 self::$_instance = new self();
             }
 
