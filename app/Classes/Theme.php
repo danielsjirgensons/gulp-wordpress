@@ -16,12 +16,10 @@
         public function __construct() {
             global $sitepress;
 
-            add_action( 'init', [ $this, 'theme_nav_menus' ] );
             add_action( 'after_setup_theme', [ $this, 'theme_support' ] );
+            add_action( 'init', [ $this, 'theme_nav_menus' ] );
             // add_action('after_setup_theme', [$this, 'theme_thumbnail_sizes']);
             add_action( 'wp_enqueue_scripts', [ $this, 'theme_script_load' ] );
-            add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_scripts' ], 100 );
-            add_filter( 'upload_mimes', [ $this, 'cc_mime_types' ] );
             // add_action( 'widgets_init', [ $this, 'theme_widgets' ] );
 
             // Remove useful actions
@@ -41,7 +39,7 @@
         public function theme_support(): void {
             add_theme_support( 'post-thumbnails' ); // Post featured images
             add_theme_support( 'custom-logo' ); // Custom logo
-            add_theme_support( 'widgets' ); // Widgets
+            //add_theme_support( 'widgets' ); // Widgets
             load_theme_textdomain( 'theme', get_template_directory() . '/languages' ); // Translations
             add_theme_support( 'html5', [ 'script', 'style' ] ); // HTML5
 
@@ -58,16 +56,6 @@
             wp_enqueue_style( 'main', $this->css_path . 'main.css', '', VERSIONS );
             // Scripts
             wp_enqueue_script( 'main', $this->js_path . 'main.js', '', VERSIONS, true );
-        }
-
-        /**
-         * Unused style deregister
-         * */
-        public function dequeue_scripts(): void {
-            // Styles
-            //wp_dequeue_style( 'handle' );
-            // Scripts
-            //wp_dequeue_script( 'handle' );
         }
 
         /**
@@ -98,20 +86,6 @@
         // 		}
         // 	}
         // }
-
-        /**
-         * Add custom file type upload
-         *
-         * @param array $mimes
-         * *
-         * * @return array
-         * */
-        public function cc_mime_types( array $mimes ): array {
-            $mimes['svg']  = 'image/svg'; // standard
-            $mimes['svgz'] = 'image/svg+xml'; // compressed SVG
-
-            return $mimes;
-        }
 
         /**
          * Registering custom widgets
