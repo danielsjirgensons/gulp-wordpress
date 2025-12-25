@@ -30,7 +30,13 @@ module.exports = deepMerge({
 			// DEVELOPMENT
 			watch: {
 				mode: 'development',
-				cache: { type: 'filesystem' },
+				cache: {
+					type: 'filesystem',
+					allowCollectingMemory: true,
+					buildDependencies: {
+						config: [__filename]
+					}
+				},
 				watch: true,
 				devtool: 'cheap-module-source-map'
 			},
@@ -38,13 +44,26 @@ module.exports = deepMerge({
 			// DEVELOPMENT BUILD
 			dev: {
 				mode: 'development',
-				cache: { type: 'filesystem' },
+				cache: {
+					type: 'filesystem',
+					allowCollectingMemory: true,
+					buildDependencies: {
+						config: [__filename]
+					}
+				},
 				devtool: 'cheap-module-source-map'
 			},
 
 			// PRODUCTION BUILD
 			prod: {
 				mode: 'production',
+				cache: {
+					type: 'filesystem',
+					allowCollectingMemory: true,
+					buildDependencies: {
+						config: [__filename]
+					}
+				},
 				devtool: false, // No source maps for prod to reduce bundle size
 				optimization: {
 					minimize: true,
