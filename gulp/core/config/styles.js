@@ -33,11 +33,13 @@ module.exports = deepMerge({
             quietDeps: true, // Hide noisy dependency warnings
         },
         autoprefixer: {
+            // Reads from package.json browserslist or uses these defaults
             overrideBrowserslist: [
                 '> 0.5%',
                 'last 2 versions',
-                'Firefox ESR',
-                'not dead'
+                'not dead',
+                'not ie 11',
+                'Firefox ESR'
             ],
             grid: 'autoplace' // Adds better CSS Grid prefixing
         },

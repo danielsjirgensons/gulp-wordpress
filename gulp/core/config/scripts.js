@@ -70,6 +70,8 @@ module.exports = deepMerge({
 					sideEffects: true, // Enable tree shaking for packages with sideEffects flag
 					usedExports: true, // Enable tree shaking
 					concatenateModules: true, // Module concatenation for faster runtime execution
+					runtimeChunk: false,
+					splitChunks: false, // Disable code splitting for WordPress themes
 					minimizer: [
 						new TerserPlugin({
 							terserOptions: {
@@ -78,21 +80,21 @@ module.exports = deepMerge({
 									pure_funcs: ['console.info', 'console.debug', 'console.warn', 'console.error'],
 									passes: 2, // Run multiple compress passes for better compression
 									drop_debugger: true, // Remove debugger statements
-									toplevel: true // Drop unused top-level vars and functions
+									toplevel: true, // Drop unused top-level vars and functions
+									ecma: 2020 // Target modern JavaScript
 								},
 								mangle: {
 									safari10: true, // Workaround Safari 10 bugs
 								},
-								output: {
+								format: {
 									comments: false,
-									beautify: false
+									ecma: 2020
 								},
 								keep_fnames: false,
 								keep_classnames: false
 							},
 							extractComments: false,
-							parallel: true,
-							// cache: true // Optionally enable caching if build speed is an issue
+							parallel: true // Faster builds on multi-core systems (Node 24 optimized)
 						})
 					],
 				},
@@ -136,11 +138,10 @@ module.exports = deepMerge({
 								loader: 'babel-loader',
 								options: {
 									cacheDirectory: true, // Speeds up rebuilds by caching
+									cacheCompression: false, // Faster on Node 24+
 									presets: [
 										['@babel/preset-env', {
-											targets: {
-												esmodules: true
-											},
+											// Reads from package.json browserslist
 											modules: false,
 											useBuiltIns: false // or 'usage' with core-js if needed
 										}],
@@ -195,7 +196,7 @@ module.exports = deepMerge({
 						failOnError: false,
 						extensions: ['js', 'jsx', 'ts', 'tsx'],
 						emitWarning: true,
-						cache: true
+						overrideConfigFile: './eslint.config.mjs'
 					}),
 					// Optionally add ForkTsCheckerWebpackPlugin for TypeScript type checking:
 					// new ForkTsCheckerWebpackPlugin()
