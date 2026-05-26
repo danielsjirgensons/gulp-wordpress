@@ -4,10 +4,10 @@ const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postcss = require('gulp-postcss');
-const notify = require('gulp-notify');
 
 // utils
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // config
 const config = require('../../config/styles');
@@ -31,8 +31,5 @@ module.exports = function () {
 		.pipe(postcss(plugins))
 
 		.pipe(gulp.dest(config.paths.dest))
-		.pipe(notify({
-			"message": pumped("SCSS Compiled & Minified."),
-			"onLast": true
-		}));
+		.pipe(streamNotify(pumped('SCSS Compiled & Minified.')));
 };

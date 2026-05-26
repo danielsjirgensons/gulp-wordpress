@@ -3,11 +3,11 @@ const plumber = require('gulp-plumber');
 const named = require('vinyl-named');
 const webpack = require('webpack');
 const gulpWebpack = require('webpack-stream');
-const notify = require('gulp-notify');
 
 // utils
 const deepMerge = require('../../utils/deepMerge');
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // config
 const config = require('../../config/scripts');
@@ -32,8 +32,5 @@ module.exports = function () {
 		))
 
 		.pipe(gulp.dest(config.paths.dest))
-		.pipe(notify({
-			"message": pumped("JS Packaged & Minified!"),
-			"onLast": true
-		}));
+		.pipe(streamNotify(pumped('JS Packaged & Minified!')));
 };

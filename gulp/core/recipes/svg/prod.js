@@ -1,10 +1,10 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
 const svgmin = require('gulp-svgmin');
-const notify = require('gulp-notify');
 
 // utils
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // config
 const config = require('../../config/svg');
@@ -22,8 +22,5 @@ module.exports = function () {
 		.pipe(svgmin(config.options.svgmin))
 
 		.pipe(gulp.dest(config.paths.dest))
-		.pipe(notify({
-			"message": pumped("Svgs Compressed"),
-			"onLast": true
-		}));
+		.pipe(streamNotify(pumped('Svgs Compressed')));
 };

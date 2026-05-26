@@ -30,7 +30,13 @@ module.exports = deepMerge({
 			// DEVELOPMENT
 			watch: {
 				mode: 'development',
-				cache: { type: 'filesystem' },
+				cache: {
+					type: 'filesystem',
+					allowCollectingMemory: true,
+					buildDependencies: {
+						config: [__filename]
+					}
+				},
 				watch: true,
 				devtool: 'cheap-module-source-map'
 			},
@@ -38,19 +44,34 @@ module.exports = deepMerge({
 			// DEVELOPMENT BUILD
 			dev: {
 				mode: 'development',
-				cache: { type: 'filesystem' },
+				cache: {
+					type: 'filesystem',
+					allowCollectingMemory: true,
+					buildDependencies: {
+						config: [__filename]
+					}
+				},
 				devtool: 'cheap-module-source-map'
 			},
 
 			// PRODUCTION BUILD
 			prod: {
 				mode: 'production',
+				cache: {
+					type: 'filesystem',
+					allowCollectingMemory: true,
+					buildDependencies: {
+						config: [__filename]
+					}
+				},
 				devtool: false, // No source maps for prod to reduce bundle size
 				optimization: {
 					minimize: true,
 					sideEffects: true, // Enable tree shaking for packages with sideEffects flag
 					usedExports: true, // Enable tree shaking
 					concatenateModules: true, // Module concatenation for faster runtime execution
+					runtimeChunk: false,
+					splitChunks: false, // Disable code splitting for WordPress themes
 					minimizer: [
 						new TerserPlugin({
 							terserOptions: {
@@ -59,21 +80,21 @@ module.exports = deepMerge({
 									pure_funcs: ['console.info', 'console.debug', 'console.warn', 'console.error'],
 									passes: 2, // Run multiple compress passes for better compression
 									drop_debugger: true, // Remove debugger statements
-									toplevel: true // Drop unused top-level vars and functions
+									toplevel: true, // Drop unused top-level vars and functions
+									ecma: 2020 // Target modern JavaScript
 								},
 								mangle: {
 									safari10: true, // Workaround Safari 10 bugs
 								},
-								output: {
+								format: {
 									comments: false,
-									beautify: false
+									ecma: 2020
 								},
 								keep_fnames: false,
 								keep_classnames: false
 							},
 							extractComments: false,
-							parallel: true,
-							// cache: true // Optionally enable caching if build speed is an issue
+							parallel: true // Faster builds on multi-core systems (Node 24 optimized)
 						})
 					],
 				},
@@ -87,7 +108,7 @@ module.exports = deepMerge({
 			// DEFAULT SETTINGS (MERGED WITH ALL BUILDS)
 			defaults: {
 				resolve: {
-					extensions: ['.js', '.jsx', '.ts', '.tsx'],
+					extensions: ['.js', '.mjs', '.cjs'],
 					alias: {
 						'lodash-es': 'lodash'
 					},
@@ -111,37 +132,23 @@ module.exports = deepMerge({
 				module: {
 					rules: [
 						{
-							test: /\.(js|jsx)$/,
+							test: /\.js$/,
 							exclude: /node_modules/,
 							use: {
 								loader: 'babel-loader',
 								options: {
 									cacheDirectory: true, // Speeds up rebuilds by caching
+									cacheCompression: false, // Faster on Node 24+
 									presets: [
 										['@babel/preset-env', {
-											targets: {
-												esmodules: true
-											},
+											// Reads from package.json browserslist
 											modules: false,
 											useBuiltIns: false // or 'usage' with core-js if needed
-										}],
-										'@babel/preset-react'
+										}]
 									],
 									plugins: ['@babel/plugin-transform-runtime']
 								}
 							}
-						},
-						{
-							test: /\.(ts|tsx)$/,
-							use: [
-								{
-									loader: 'ts-loader',
-									options: {
-										transpileOnly: true, // Improves speed, consider fork-ts-checker-webpack-plugin for type checks
-									}
-								}
-							],
-							exclude: /node_modules/
 						},
 						{
 							test: /swiper\.esm\.js/,
@@ -174,9 +181,9 @@ module.exports = deepMerge({
 				plugins: [
 					new ESLintPlugin({
 						failOnError: false,
-						extensions: ['js', 'jsx', 'ts', 'tsx'],
+						extensions: ['js', 'mjs', 'cjs'],
 						emitWarning: true,
-						cache: true
+						overrideConfigFile: './eslint.config.mjs'
 					}),
 					// Optionally add ForkTsCheckerWebpackPlugin for TypeScript type checking:
 					// new ForkTsCheckerWebpackPlugin()
