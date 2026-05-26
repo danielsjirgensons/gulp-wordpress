@@ -37,7 +37,7 @@ export default [
 			'no-multiple-empty-lines': 'off',
 			'no-console': 'warn',
 			'no-unused-vars': 'warn',
-			'@typescript-eslint/no-unused-vars': 'warn',
+			'@typescript-eslint/no-unused-vars': 'off',
 			'@typescript-eslint/no-explicit-any': 'off'
 		}
 	},
@@ -45,10 +45,11 @@ export default [
 		// TypeScript specific overrides
 		files: ['**/*.{ts,tsx}'],
 		languageOptions: {
-			parser: typescriptEslint.parser,
-			parserOptions: {
-				project: './tsconfig.json'
-			}
+			parser: typescriptEslint.parser
+		},
+		rules: {
+			'no-unused-vars': 'off',
+			'@typescript-eslint/no-unused-vars': 'warn'
 		}
 	},
 	{

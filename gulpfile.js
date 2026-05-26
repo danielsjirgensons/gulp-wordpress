@@ -86,7 +86,7 @@ gulp.task('default', gulp.parallel(
 	'scripts:watch',
 	'styles:watch'
 	//'browser:sync',
-	)
+)
 );
 
 gulp.task('build', gulp.parallel(
@@ -96,5 +96,15 @@ gulp.task('build', gulp.parallel(
 	'images:prod',
 	'scripts:prod',
 	'styles:prod'
-	)
+)
+);
+
+gulp.task('clean', gulp.parallel(
+	'fonts:clean',
+	'svg:clean',
+	'sprite:clean',
+	'images:clean',
+	'scripts:clean',
+	'styles:clean'
+)
 );

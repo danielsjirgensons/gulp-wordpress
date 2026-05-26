@@ -9,7 +9,7 @@ try {
 }
 
 /**
- * Fake the gulp-notfy functionality
+ * Fake the gulp-notify functionality
  * to provide a consistent interface
  * for non-stream notifications
  *
