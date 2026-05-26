@@ -24,12 +24,8 @@ module.exports = deepMerge({
 	open: false,
 	notify: false, // Disable browser notification popup
 
-	// File watching
-	files: [
-		'**/*.php',
-		'assets/css/**/*.css',
-		'assets/js/**/*.js'
-	],
+	// Reloads are triggered explicitly from gulp recipes
+	// to avoid duplicate reload/injection events.
 
 	// Browser options
 	browser: 'default', // or specify: ['chrome', 'firefox']

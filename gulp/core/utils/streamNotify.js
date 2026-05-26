@@ -10,14 +10,14 @@ const notifaker = require('./notifaker');
  * @returns {Transform}
  */
 module.exports = function streamNotify(message) {
-    return through2.obj(
-        function (file, enc, callback) {
-            this.push(file);
-            callback();
-        },
-        function (callback) {
-            notifaker(message);
-            callback();
-        }
-    );
+	return through2.obj(
+		function (file, enc, callback) {
+			this.push(file);
+			callback();
+		},
+		function (callback) {
+			notifaker(message);
+			callback();
+		}
+	);
 };
