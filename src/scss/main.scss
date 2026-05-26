@@ -1,7 +1,10 @@
-@import "global/reset";
-@import "global/global";
-
-@import "plugins/bootstrap";
+@use "sass:color";
+@use "global"as *;
+@use "global/reset";
+@use "plugins/bootstrap";
+@use "partials/menu";
+@use "partials/footer";
+@use "partials/page";
 
 // FONT LOADING
 
@@ -35,7 +38,7 @@ a {
     text-decoration: none;
 
     &:hover {
-        color: darken($primary, 10%);
+        color: color.adjust($primary, $lightness: -10%);
     }
 }
 
@@ -107,7 +110,4 @@ hr {
     border-bottom: 1px solid $mediumblack;
 }
 
-// Components
-@import "partials/menu";
-@import "partials/footer";
-@import "partials/page";
+// Components are loaded via @use declarations above.

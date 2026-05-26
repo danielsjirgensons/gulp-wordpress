@@ -1,9 +1,7 @@
 const gulp = require('gulp');
 const filter = require('gulp-filter');
 const plumber = require('gulp-plumber');
-const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass')(require('sass'));
-const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
 const autoprefixer = require('autoprefixer');
 const postcss = require('gulp-postcss');
@@ -12,7 +10,9 @@ const postcss = require('gulp-postcss');
 const config = require('../../config/styles');
 
 // utils
+const notifaker = require('../../utils/notifaker');
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // postcss
 const plugins = [
@@ -30,19 +30,17 @@ const plugins = [
 module.exports = function () {
 	const filterCSS = filter('**/*.css', { restore: true });
 
-	return gulp.src(config.paths.src)
+	return gulp.src(config.paths.src, { sourcemaps: true })
 		.pipe(plumber())
 
-		.pipe(sourcemaps.init())
 		.pipe(sass.sync(config.options.sass))
 		.on('error', function (error) {
-			notify().write(error);
+			notifaker(error.message || 'SCSS compilation error');
 			this.emit('end');
 		})
 		.pipe(postcss(plugins))
-		.pipe(sourcemaps.write('./'))
 
-		.pipe(gulp.dest(config.paths.dest))
+		.pipe(gulp.dest(config.paths.dest, { sourcemaps: '.' }))
 
 		.pipe(filterCSS) // sourcemaps adds `.map` files to the gulp
 		// stream, but we only want to trigger
@@ -51,8 +49,5 @@ module.exports = function () {
 		.pipe(browserSync.reload({ stream: true }))
 		.pipe(filterCSS.restore)
 
-		.pipe(notify({
-			"message": pumped("Your SCSS is Compiled."),
-			"onLast": true
-		}));
+		.pipe(streamNotify(pumped('Your SCSS is Compiled.')));
 };

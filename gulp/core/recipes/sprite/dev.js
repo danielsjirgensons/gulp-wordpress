@@ -5,12 +5,13 @@ const svgmin = require('gulp-svgmin');
 const log = require('fancy-log');
 const path = require('path');
 const mergeStream = require('merge-stream');
-const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
 
 // utils
 const getFolders = require('../../utils/getFolders');
+const notifaker = require('../../utils/notifaker');
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // config
 const config = require('../../config/sprite');
@@ -30,9 +31,7 @@ function spriteTask(name, src) {
 		.pipe(svgSprite(config.options.svgSprite(name)))
 
 		.on('error', function (error) {
-			notify({
-				"message": "Error on Sprite creation"
-			});
+			notifaker('Error on Sprite creation');
 			log.error(error);
 		})
 
@@ -40,7 +39,6 @@ function spriteTask(name, src) {
 
 		.pipe(gulp.dest(config.paths.dest));
 }
-
 
 /**
  * Create Sprite from individual
@@ -56,10 +54,7 @@ module.exports = function () {
 	const root = spriteTask('default', path.join(config.paths.src, '/*.svg'));
 
 	return mergeStream(subDirs, root)
-		.pipe(notify({
-			"message": pumped("Svg Sprites Generated"),
-			"onLast": true
-		}))
+		.pipe(streamNotify(pumped('Svg Sprites Generated')))
 
 		.on('end', browserSync.reload);
 };

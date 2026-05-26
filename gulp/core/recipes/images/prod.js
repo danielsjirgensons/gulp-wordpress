@@ -1,10 +1,10 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
 const sharpOptimizeImages = require('gulp-sharp-optimize-images').default;
-const notify = require('gulp-notify');
 
 // utils
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // config
 const config = require('../../config/images');
@@ -33,8 +33,5 @@ module.exports = function () {
 			})
 		)
 		.pipe(gulp.dest(config.paths.dest))
-		.pipe(notify({
-			"message": pumped("Images Compressed"),
-			"onLast": true
-		}));
+		.pipe(streamNotify(pumped('Images Compressed')));
 };

@@ -1,10 +1,10 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
-const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
 
 // utils
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // config
 const config = require('../../config/svg');
@@ -19,10 +19,7 @@ module.exports = function () {
 		.pipe(plumber())
 
 		.pipe(gulp.dest(config.paths.dest))
-		.pipe(notify({
-			"message": pumped("Svgs Moved"),
-			"onLast": true
-		}))
+		.pipe(streamNotify(pumped('Svgs Moved')))
 
 		.on('end', browserSync.reload);
 };

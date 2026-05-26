@@ -1,11 +1,11 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
 const sharpOptimizeImages = require('gulp-sharp-optimize-images').default;
-const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
 
 // utils
 const pumped = require('../../utils/pumped');
+const streamNotify = require('../../utils/streamNotify');
 
 // config
 const config = require('../../config/images');
@@ -32,10 +32,7 @@ module.exports = function () {
 			})
 		)
 		.pipe(gulp.dest(config.paths.dest))
-		.pipe(notify({
-			"message": pumped("Images Moved"),
-			"onLast": true
-		}))
+		.pipe(streamNotify(pumped('Images Moved')))
 
 		.on('end', browserSync.reload);
 };

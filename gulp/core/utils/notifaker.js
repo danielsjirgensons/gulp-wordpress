@@ -1,6 +1,12 @@
-const notifier = require('node-notifier');
 const log = require('fancy-log');
 const c = require('ansi-colors');
+
+let notifier;
+try {
+	notifier = require('node-notifier');
+} catch (error) {
+	notifier = null;
+}
 
 /**
  * Fake the gulp-notfy functionality
@@ -17,9 +23,11 @@ module.exports = function (message) {
 		c.green(message)
 	);
 
-	notifier.notify({
-		"title": "Gulp notification",
-		"message": message,
-		"onLast": true
-	});
+	if (notifier && typeof notifier.notify === 'function') {
+		notifier.notify({
+			"title": "Gulp notification",
+			"message": message,
+			"onLast": true
+		});
+	}
 };
