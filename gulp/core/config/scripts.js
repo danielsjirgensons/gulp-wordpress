@@ -108,7 +108,7 @@ module.exports = deepMerge({
 			// DEFAULT SETTINGS (MERGED WITH ALL BUILDS)
 			defaults: {
 				resolve: {
-					extensions: ['.js', '.jsx', '.ts', '.tsx'],
+					extensions: ['.js', '.mjs', '.cjs'],
 					alias: {
 						'lodash-es': 'lodash'
 					},
@@ -144,24 +144,11 @@ module.exports = deepMerge({
 											// Reads from package.json browserslist
 											modules: false,
 											useBuiltIns: false // or 'usage' with core-js if needed
-										}],
-										'@babel/preset-react'
+										}]
 									],
 									plugins: ['@babel/plugin-transform-runtime']
 								}
 							}
-						},
-						{
-							test: /\.(ts|tsx)$/,
-							use: [
-								{
-									loader: 'ts-loader',
-									options: {
-										transpileOnly: true, // Improves speed, consider fork-ts-checker-webpack-plugin for type checks
-									}
-								}
-							],
-							exclude: /node_modules/
 						},
 						{
 							test: /swiper\.esm\.js/,
@@ -194,7 +181,7 @@ module.exports = deepMerge({
 				plugins: [
 					new ESLintPlugin({
 						failOnError: false,
-						extensions: ['js', 'jsx', 'ts', 'tsx'],
+						extensions: ['js', 'mjs', 'cjs'],
 						emitWarning: true,
 						overrideConfigFile: './eslint.config.mjs'
 					}),

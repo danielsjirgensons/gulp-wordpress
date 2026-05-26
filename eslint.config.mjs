@@ -1,13 +1,11 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import babelParser from '@babel/eslint-parser';
-import typescriptEslint from 'typescript-eslint';
 
 export default [
 	js.configs.recommended,
-	...typescriptEslint.configs.recommended,
 	{
-		files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+		files: ['**/*.{js,mjs,cjs}'],
 		languageOptions: {
 			parser: babelParser,
 			parserOptions: {
@@ -15,7 +13,7 @@ export default [
 				sourceType: 'module',
 				requireConfigFile: false,
 				babelOptions: {
-					presets: ['@babel/preset-env', '@babel/preset-react']
+					presets: ['@babel/preset-env']
 				}
 			},
 			globals: {
@@ -36,20 +34,7 @@ export default [
 			'no-param-reassign': ['error', { props: false }],
 			'no-multiple-empty-lines': 'off',
 			'no-console': 'warn',
-			'no-unused-vars': 'warn',
-			'@typescript-eslint/no-unused-vars': 'off',
-			'@typescript-eslint/no-explicit-any': 'off'
-		}
-	},
-	{
-		// TypeScript specific overrides
-		files: ['**/*.{ts,tsx}'],
-		languageOptions: {
-			parser: typescriptEslint.parser
-		},
-		rules: {
-			'no-unused-vars': 'off',
-			'@typescript-eslint/no-unused-vars': 'warn'
+			'no-unused-vars': 'warn'
 		}
 	},
 	{
