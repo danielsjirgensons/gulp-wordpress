@@ -1,4 +1,5 @@
-const through2 = require('through2').default;
+const through2Import = require('through2');
+const through2 = through2Import.default || through2Import;
 const notifaker = require('./notifaker');
 
 /**
