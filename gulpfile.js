@@ -1,10 +1,3 @@
-/* eslint
-no-var: 0,
-no-multi-spaces: 0,
-no-mixed-spaces-and-tabs: 0,
-no-multiple-empty-lines: 0
-*/
-
 const gulp = require('gulp');
 const log = require('fancy-log');
 const c = require('ansi-colors');
