@@ -25,7 +25,6 @@
             if ( function_exists( 'acf_get_setting' ) ) {
                 add_filter( 'acf/settings/load_json', [ $this, 'acf_field_load_json' ] );
             }
-            add_action( 'after_setup_theme', [ $this, 'theme_translation_setup' ] );
 
             // Script configs
             add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_scripts' ], 200 );
@@ -59,15 +58,6 @@
             $paths[] = get_stylesheet_directory() . '/acf-json';
 
             return $paths;
-        }
-
-        /**
-         * Translation, locale loading for theme and folder setup
-         *
-         * @return void
-         */
-        public function theme_translation_setup(): void {
-            load_theme_textdomain( 'textdomain', get_template_directory() . '/languages' );
         }
 
         /**

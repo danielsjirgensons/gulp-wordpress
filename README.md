@@ -17,7 +17,7 @@ Modern WordPress theme starter with an optimized Gulp 5 build pipeline for stati
 - **Node.js**: `>=18.20.0 <25`
 - **npm**: `>=9.0.0`
 - **PHP**: `>=8.0`
-- **WordPress**: `>=6.0`
+- **WordPress**: `>=6.3`
 
 ## Installation
 
