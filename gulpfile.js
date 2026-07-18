@@ -1,10 +1,3 @@
-/* eslint
-no-var: 0,
-no-multi-spaces: 0,
-no-mixed-spaces-and-tabs: 0,
-no-multiple-empty-lines: 0
-*/
-
 const gulp = require('gulp');
 const log = require('fancy-log');
 const c = require('ansi-colors');
@@ -78,6 +71,15 @@ gulp.task('styles:watch', gulp.series('styles:dev', lazyQuire(require, './gulp/c
 /**
  * Grouped
  */
+gulp.task('clean', gulp.parallel(
+	'fonts:clean',
+	'svg:clean',
+	'sprite:clean',
+	'images:clean',
+	'scripts:clean',
+	'styles:clean'
+));
+
 gulp.task('default', gulp.parallel(
 	'fonts:watch',
 	'svg:watch',
@@ -96,15 +98,5 @@ gulp.task('build', gulp.parallel(
 	'images:prod',
 	'scripts:prod',
 	'styles:prod'
-)
-);
-
-gulp.task('clean', gulp.parallel(
-	'fonts:clean',
-	'svg:clean',
-	'sprite:clean',
-	'images:clean',
-	'scripts:clean',
-	'styles:clean'
 )
 );

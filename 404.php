@@ -2,7 +2,7 @@
     <main>
         <section>
             <p>
-                <?php esc_attr_e( 'Error 404, Ooops ! Cette page n’existe pas !', 'textdomaintomodify' ); ?>
+                <?php esc_html_e( 'Error 404, Ooops! This page does not exist!', 'textdomain' ); ?>
             </p>
         </section>
     </main>

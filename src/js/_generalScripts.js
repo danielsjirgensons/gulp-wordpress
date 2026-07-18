@@ -1,12 +1,29 @@
+/**
+ * General Scripts Module
+ * Handles common functionality across the site
+ */
 class General {
 	constructor() {
-		this.testVariable = 'script working';
 		this.init();
 	}
 
 	init() {
-		// for tests purposes only
-		console.log(this.testVariable);
+		this.setupEventListeners();
+		this.initializeComponents();
+	}
+
+	setupEventListeners() {
+		// Add global event listeners here
+		// Example: document.addEventListener('click', this.handleDocumentClick.bind(this));
+	}
+
+	handleDocumentClick() {
+		// Handle global clicks if needed
+	}
+
+	initializeComponents() {
+		// Initialize common components
+		// Example: tooltips, modals, etc.
 	}
 }
 

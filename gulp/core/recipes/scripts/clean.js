@@ -9,7 +9,6 @@ const config = require('../../config/scripts');
  * asset directory
  *
  */
-module.exports = function (done) {
-	del(config.paths.clean, { force: true })
-		.then(function () { done(); });
+module.exports = async function () {
+	await del(config.paths.clean, { force: true });
 };

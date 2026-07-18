@@ -1,11 +1,14 @@
 <?php
+    declare( strict_types=1 );
 
-    class Theme {
+    namespace ProfDesigns\Theme;
+
+    final class Theme {
         private static $_instance = null;
-        public string $css_path = ASSETS_URL . '/style/';
+        public string $css_path = ASSETS_URL . '/css';
         public string $js_path = ASSETS_URL . '/js';
 
-        public static function instance(): self|null {
+        public static function instance(): self {
             if ( self::$_instance === null ) {
                 self::$_instance = new self();
             }
@@ -14,33 +17,26 @@
         }
 
         public function __construct() {
-            global $sitepress;
-
             add_action( 'after_setup_theme', [ $this, 'theme_support' ] );
             add_action( 'init', [ $this, 'theme_nav_menus' ] );
-            // add_action('after_setup_theme', [$this, 'theme_thumbnail_sizes']);
             add_action( 'wp_enqueue_scripts', [ $this, 'theme_script_load' ] );
+            // add_action('after_setup_theme', [$this, 'theme_thumbnail_sizes']);
             // add_action( 'widgets_init', [ $this, 'theme_widgets' ] );
-
-            // Remove useful actions
-            remove_action( 'wp_head', 'wp_generator' );
-            remove_action( 'wp_head', 'auto_sizes_render_generator' );
-            remove_action( 'wp_head', 'plsr_render_generator_meta_tag' );
-            remove_action( 'wp_head', 'webp_uploads_render_generator' );
-            remove_action( 'wp_head', [ $sitepress, 'meta_generator_tag' ] );
-
-            remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-            remove_action( 'wp_print_styles', 'print_emoji_styles' );
         }
 
         /**
-         * Theme support actions
+         * Register theme support features.
+         *
+         * Enables post thumbnails, custom logo, HTML5 support, and removes
+         * unnecessary default WordPress image sizes.
+         *
+         * @return void
          * */
         public function theme_support(): void {
             add_theme_support( 'post-thumbnails' ); // Post featured images
             add_theme_support( 'custom-logo' ); // Custom logo
             //add_theme_support( 'widgets' ); // Widgets
-            load_theme_textdomain( 'theme', get_template_directory() . '/languages' ); // Translations
+            load_theme_textdomain( 'textdomain', get_template_directory() . '/languages' ); // Translations
             add_theme_support( 'html5', [ 'script', 'style' ] ); // HTML5
 
             // Removing useless options
@@ -53,9 +49,13 @@
          * */
         public function theme_script_load(): void {
             // Styles
-            wp_enqueue_style( 'main', $this->css_path . 'main.css', '', VERSIONS );
-            // Scripts
-            wp_enqueue_script( 'main', $this->js_path . 'main.js', '', VERSIONS, true );
+            wp_enqueue_style( 'main', $this->css_path . '/main.css', [], VERSIONS );
+
+            // Scripts - load in footer with proper dependencies
+            wp_enqueue_script( 'main', $this->js_path . '/main.js', [], VERSIONS, [
+                'strategy'  => 'defer',
+                'in_footer' => true,
+            ] );
         }
 
         /**

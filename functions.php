@@ -1,33 +1,32 @@
 <?php
-    /**
-     * Load required
-     * */
-    const THEMEDIR = __DIR__;
+    declare( strict_types=1 );
 
-    define( 'DIRURL', get_stylesheet_directory_uri() );
-    const ASSETS_URL = DIRURL . '/assets';
-    define( 'VERSIONS', ( wp_get_environment_type() === 'local' ) ? time() : wp_get_theme()->get( 'Version' ) );
+    /**
+     * Theme Functions
+     * Main entry point for theme initialization
+     */
+
+    use ProfDesigns\Theme\Theme;
+    use ProfDesigns\Theme\Config;
+
+    // Define constants
+    const THEME_DIR = __DIR__;
+    define( 'ASSETS_URL', get_stylesheet_directory_uri() . '/assets' );
+    define( 'THEME_VERSION', wp_get_theme()->get( 'Version' ) );
+    define( 'VERSIONS', ( wp_get_environment_type() === 'local' ) ? THEME_VERSION . '-dev' : THEME_VERSION );
     define( 'PRODUCTION', wp_get_environment_type() !== 'local' );
 
+    // Error reporting in development
     if ( ! PRODUCTION ) {
         ini_set( 'display_errors', '1' );
         ini_set( 'display_startup_errors', '1' );
         error_reporting( E_ALL );
-        //show_admin_bar(false);
     }
 
-    /**
-     * Initialize required includes
-     * */
-    require_once THEMEDIR . '/app/autoload.php';
-    require_once THEMEDIR . '/app/helpers.php';
+    // Load required files
+    require_once THEME_DIR . '/app/autoload.php';
+    require_once THEME_DIR . '/app/helpers.php';
 
-    /**
-     * Load required classes
-     * */
+    // Initialize theme classes
     Theme::instance();
     Config::instance();
-
-    /**
-     * Deprecated functionality
-     * */

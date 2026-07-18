@@ -1,1 +1,1 @@
-(()=>{"use strict";const t=class{constructor(){this.testVariable="script working",this.init()}init(){}},i={init(){new t}};document.addEventListener("DOMContentLoaded",()=>{i.init()})})();
+(()=>{"use strict";const t=class{constructor(){this.init()}init(){this.setupEventListeners(),this.initializeComponents()}setupEventListeners(){}handleDocumentClick(){}initializeComponents(){}},i={init(){this.general=new t}};document.addEventListener("DOMContentLoaded",(()=>{i.init()}))})();

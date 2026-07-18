@@ -1,5 +1,6 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const path = require('path');
 
 // utils
 const deepMerge = require('../utils/deepMerge');
@@ -32,6 +33,7 @@ module.exports = deepMerge({
 				mode: 'development',
 				cache: {
 					type: 'filesystem',
+					cacheDirectory: path.resolve(__dirname, '../../../node_modules/.cache/webpack'),
 					allowCollectingMemory: true,
 					buildDependencies: {
 						config: [__filename]
@@ -46,6 +48,7 @@ module.exports = deepMerge({
 				mode: 'development',
 				cache: {
 					type: 'filesystem',
+					cacheDirectory: path.resolve(__dirname, '../../../node_modules/.cache/webpack'),
 					allowCollectingMemory: true,
 					buildDependencies: {
 						config: [__filename]
@@ -59,6 +62,7 @@ module.exports = deepMerge({
 				mode: 'production',
 				cache: {
 					type: 'filesystem',
+					cacheDirectory: path.resolve(__dirname, '../../../node_modules/.cache/webpack'),
 					allowCollectingMemory: true,
 					buildDependencies: {
 						config: [__filename]
@@ -109,9 +113,6 @@ module.exports = deepMerge({
 			defaults: {
 				resolve: {
 					extensions: ['.js', '.mjs', '.cjs'],
-					alias: {
-						'lodash-es': 'lodash'
-					},
 					fallback: {
 						// Polyfills for node core modules if needed (webpack 5 no longer includes them)
 						// e.g., crypto: require.resolve('crypto-browserify'),
@@ -133,20 +134,32 @@ module.exports = deepMerge({
 					rules: [
 						{
 							test: /\.js$/,
-							exclude: /node_modules/,
+							exclude: /node_modules[\\/](?!(bootstrap)[\\/]).*/,
 							use: {
 								loader: 'babel-loader',
 								options: {
-									cacheDirectory: true, // Speeds up rebuilds by caching
-									cacheCompression: false, // Faster on Node 24+
+									cacheDirectory: true,
+									cacheCompression: false,
+									assumptions: {
+										// Babel 8 replacement for loose: true
+										setPublicClassFields: true,
+										privateFieldsAsProperties: true,
+										constantSuper: true,
+										noDocumentAll: true,
+										objectRestNoSymbols: true,
+										pureGetters: false,
+										skipForOfIteratorClosing: true,
+										superIsCallableConstructor: false
+									},
 									presets: [
 										['@babel/preset-env', {
-											// Reads from package.json browserslist
 											modules: false,
-											useBuiltIns: false // or 'usage' with core-js if needed
+											useBuiltIns: false
 										}]
 									],
-									plugins: ['@babel/plugin-transform-runtime']
+									plugins: [
+										'@babel/plugin-transform-runtime'
+									]
 								}
 							}
 						},
@@ -181,12 +194,12 @@ module.exports = deepMerge({
 				plugins: [
 					new ESLintPlugin({
 						failOnError: false,
-						extensions: ['js', 'mjs', 'cjs'],
+						extensions: ['js', 'mjs'],
 						emitWarning: true,
-						overrideConfigFile: './eslint.config.mjs'
-					}),
-					// Optionally add ForkTsCheckerWebpackPlugin for TypeScript type checking:
-					// new ForkTsCheckerWebpackPlugin()
+						overrideConfigFile: './eslint.config.mjs',
+						cache: true,
+						cacheLocation: 'node_modules/.cache/.eslintcache'
+					})
 				],
 				externals: {
 					jquery: 'jQuery',

@@ -5,13 +5,13 @@ const deepMerge = require('../utils/deepMerge');
  * BrowserSync
  * configuration
  * object
- * 
- * Uncomment and configure the proxy option below for WordPress development
- * Replace 'yoursite.local' with your local WordPress URL
+ *
+ * SETUP REQUIRED: Set the BROWSERSYNC_PROXY environment variable
+ * or create a .env file with: BROWSERSYNC_PROXY=yoursite.local
  */
 module.exports = deepMerge({
 	// Proxy option for WordPress development
-	// proxy: 'yoursite.local',
+	proxy: process.env.BROWSERSYNC_PROXY || false,
 
 	// Or use 'server' for static files (not recommended for WordPress)
 	// server: {

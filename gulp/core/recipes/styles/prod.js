@@ -23,13 +23,17 @@ const plugins = [
  *
  */
 module.exports = function () {
-	return gulp.src(config.paths.src)
-		.pipe(plumber())
+	return gulp.src(config.paths.src, {
+		sourcemaps: process.env.GENERATE_SOURCEMAPS === 'true'
+	})
+	.pipe(plumber())
 
-		.pipe(sass.sync(config.options.sass).on('error', sass.logError))
+	.pipe(sass.sync(config.options.sass).on('error', sass.logError))
 
-		.pipe(postcss(plugins))
+	.pipe(postcss(plugins))
 
-		.pipe(gulp.dest(config.paths.dest))
-		.pipe(streamNotify(pumped('SCSS Compiled & Minified.')));
+	.pipe(gulp.dest(config.paths.dest, {
+		sourcemaps: process.env.GENERATE_SOURCEMAPS === 'true' ? '.' : false
+	}))
+	.pipe(streamNotify(pumped('SCSS Compiled & Minified.')));
 };
