@@ -14,7 +14,9 @@
         public function __construct() {
             global $sitepress;
 
-            add_filter( 'acf/settings/load_json', [ $this, 'acf_field_load_json' ] );
+            if ( function_exists( 'acf_get_setting' ) ) {
+                add_filter( 'acf/settings/load_json', [ $this, 'acf_field_load_json' ] );
+            }
             add_action( 'after_setup_theme', [ $this, 'theme_translation_setup' ] );
 
             // Script configs
@@ -58,11 +60,6 @@
          */
         public function theme_translation_setup(): void {
             load_theme_textdomain( 'textdomain', get_template_directory() . '/languages' );
-            $locale      = get_locale();
-            $locale_file = get_template_directory() . "/languages/{$locale}.php";
-            if ( is_readable( $locale_file ) ) {
-                require_once( $locale_file );
-            }
         }
 
         /**
@@ -90,11 +87,11 @@
          * Add custom file type upload
          *
          * @param array $mimes
-         * *
-         * * @return array
+         *
+         * @return array
          * */
         public function cc_mime_types( array $mimes ): array {
-            $mimes['svg']  = 'image/svg'; // standard
+            $mimes['svg']  = 'image/svg+xml'; // standard
             $mimes['svgz'] = 'image/svg+xml'; // compressed SVG
 
             return $mimes;

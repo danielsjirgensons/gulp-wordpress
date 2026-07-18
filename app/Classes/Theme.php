@@ -1,11 +1,14 @@
 <?php
+    declare( strict_types=1 );
 
-    class Theme {
+    namespace ProfDesigns\Theme;
+
+    final class Theme {
         private static $_instance = null;
         public string $css_path = ASSETS_URL . '/css';
         public string $js_path = ASSETS_URL . '/js';
 
-        public static function instance(): self|null {
+        public static function instance(): self {
             if ( self::$_instance === null ) {
                 self::$_instance = new self();
             }
@@ -22,7 +25,12 @@
         }
 
         /**
-         * Theme support actions
+         * Register theme support features.
+         *
+         * Enables post thumbnails, custom logo, HTML5 support, and removes
+         * unnecessary default WordPress image sizes.
+         *
+         * @return void
          * */
         public function theme_support(): void {
             add_theme_support( 'post-thumbnails' ); // Post featured images

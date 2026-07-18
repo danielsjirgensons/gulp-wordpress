@@ -1,11 +1,13 @@
 <?php
+    declare( strict_types=1 );
+
     /**
      * Theme Functions
      * Main entry point for theme initialization
      */
 
     // Define constants
-    const THEMEDIR = __DIR__;
+    const THEME_DIR = __DIR__;
     define( 'ASSETS_URL', get_stylesheet_directory_uri() . '/assets' );
     define( 'THEME_VERSION', wp_get_theme()->get( 'Version' ) );
     define( 'VERSIONS', ( wp_get_environment_type() === 'local' ) ? THEME_VERSION . '-dev' : THEME_VERSION );
@@ -19,8 +21,8 @@
     }
 
     // Load required files
-    require_once THEMEDIR . '/app/autoload.php';
-    require_once THEMEDIR . '/app/helpers.php';
+    require_once THEME_DIR . '/app/autoload.php';
+    require_once THEME_DIR . '/app/helpers.php';
 
     // Initialize theme classes
     Theme::instance();
