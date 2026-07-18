@@ -133,20 +133,32 @@ module.exports = deepMerge({
 					rules: [
 						{
 							test: /\.js$/,
-							exclude: /node_modules/,
+							exclude: /node_modules\/(?!(bootstrap)\/).*/,
 							use: {
 								loader: 'babel-loader',
 								options: {
-									cacheDirectory: true, // Speeds up rebuilds by caching
-									cacheCompression: false, // Faster on Node 24+
+									cacheDirectory: true,
+									cacheCompression: false,
+									assumptions: {
+										// Babel 8 replacement for loose: true
+										setPublicClassFields: true,
+										privateFieldsAsProperties: true,
+										constantSuper: true,
+										noDocumentAll: true,
+										objectRestNoSymbols: true,
+										pureGetters: false,
+										skipForOfIteratorClosing: true,
+										superIsCallableConstructor: false
+									},
 									presets: [
 										['@babel/preset-env', {
-											// Reads from package.json browserslist
 											modules: false,
-											useBuiltIns: false // or 'usage' with core-js if needed
+											useBuiltIns: false
 										}]
 									],
-									plugins: ['@babel/plugin-transform-runtime']
+									plugins: [
+										'@babel/plugin-transform-runtime'
+									]
 								}
 							}
 						},
@@ -181,12 +193,12 @@ module.exports = deepMerge({
 				plugins: [
 					new ESLintPlugin({
 						failOnError: false,
-						extensions: ['js', 'mjs', 'cjs'],
+						extensions: ['js', 'mjs'],
 						emitWarning: true,
-						overrideConfigFile: './eslint.config.mjs'
-					}),
-					// Optionally add ForkTsCheckerWebpackPlugin for TypeScript type checking:
-					// new ForkTsCheckerWebpackPlugin()
+						overrideConfigFile: './eslint.config.mjs',
+						cache: true,
+						cacheLocation: 'node_modules/.cache/.eslintcache'
+					})
 				],
 				externals: {
 					jquery: 'jQuery',

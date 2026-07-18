@@ -27,20 +27,27 @@ module.exports = deepMerge({
 
     options: {
         sass: {
-            implementation: require('sass'), // Use dart-sass for performance
-            precision: 5, // Ensures accurate decimal calculations
-            includePaths: ['node_modules', assets.src + '/scss'], // Allow SCSS imports from both npm and project
-            quietDeps: true, // Hide noisy dependency warnings
+            implementation: require('sass'),
+            outputStyle: 'expanded',
+            precision: 5,
+            includePaths: ['node_modules', assets.src + '/scss'],
+            quietDeps: true,
+            silenceDeprecations: ['import', 'global-builtin']
         },
         autoprefixer: {
-            // Reads target browsers from package.json `browserslist`
-            grid: 'autoplace' // Adds better CSS Grid prefixing
+            grid: 'autoplace',
+            cascade: false
         },
         minify: {
             preset: [
                 'default',
                 {
-                    discardComments: { removeAllButFirst: true } // Remove all comments except the first one
+                    discardComments: { removeAll: true },
+                    normalizeWhitespace: true,
+                    colormin: true,
+                    convertValues: true,
+                    mergeLonghand: true,
+                    mergeRules: true
                 }
             ]
         }

@@ -78,6 +78,15 @@ gulp.task('styles:watch', gulp.series('styles:dev', lazyQuire(require, './gulp/c
 /**
  * Grouped
  */
+gulp.task('clean', gulp.parallel(
+	'fonts:clean',
+	'svg:clean',
+	'sprite:clean',
+	'images:clean',
+	'scripts:clean',
+	'styles:clean'
+));
+
 gulp.task('default', gulp.parallel(
 	'fonts:watch',
 	'svg:watch',

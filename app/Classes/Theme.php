@@ -2,7 +2,7 @@
 
     class Theme {
         private static $_instance = null;
-        public string $css_path = ASSETS_URL . '/style/';
+        public string $css_path = ASSETS_URL . '/css';
         public string $js_path = ASSETS_URL . '/js';
 
         public static function instance(): self|null {
@@ -53,9 +53,13 @@
          * */
         public function theme_script_load(): void {
             // Styles
-            wp_enqueue_style( 'main', $this->css_path . 'main.css', '', VERSIONS );
-            // Scripts
-            wp_enqueue_script( 'main', $this->js_path . 'main.js', '', VERSIONS, true );
+            wp_enqueue_style( 'main', $this->css_path . '/main.css', [], VERSIONS );
+
+            // Scripts - load in footer with proper dependencies
+            wp_enqueue_script( 'main', $this->js_path . '/main.js', [], VERSIONS, [
+                'strategy'  => 'defer',
+                'in_footer' => true,
+            ] );
         }
 
         /**
