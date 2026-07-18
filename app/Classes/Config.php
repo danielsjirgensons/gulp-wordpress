@@ -1,6 +1,14 @@
 <?php
+    declare( strict_types=1 );
 
-    class Config {
+    namespace ProfDesigns\Theme;
+
+    /**
+     * Theme configuration class.
+     *
+     * Handles ACF settings, translations, script management, and MIME types.
+     */
+    final class Config {
         private static $_instance = null;
 
         public static function instance(): self|null {

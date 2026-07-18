@@ -1,5 +1,6 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const path = require('path');
 
 // utils
 const deepMerge = require('../utils/deepMerge');
@@ -32,6 +33,7 @@ module.exports = deepMerge({
 				mode: 'development',
 				cache: {
 					type: 'filesystem',
+					cacheDirectory: path.resolve(__dirname, '../../../node_modules/.cache/webpack'),
 					allowCollectingMemory: true,
 					buildDependencies: {
 						config: [__filename]
@@ -46,6 +48,7 @@ module.exports = deepMerge({
 				mode: 'development',
 				cache: {
 					type: 'filesystem',
+					cacheDirectory: path.resolve(__dirname, '../../../node_modules/.cache/webpack'),
 					allowCollectingMemory: true,
 					buildDependencies: {
 						config: [__filename]
@@ -59,6 +62,7 @@ module.exports = deepMerge({
 				mode: 'production',
 				cache: {
 					type: 'filesystem',
+					cacheDirectory: path.resolve(__dirname, '../../../node_modules/.cache/webpack'),
 					allowCollectingMemory: true,
 					buildDependencies: {
 						config: [__filename]
@@ -109,9 +113,6 @@ module.exports = deepMerge({
 			defaults: {
 				resolve: {
 					extensions: ['.js', '.mjs', '.cjs'],
-					alias: {
-						'lodash-es': 'lodash'
-					},
 					fallback: {
 						// Polyfills for node core modules if needed (webpack 5 no longer includes them)
 						// e.g., crypto: require.resolve('crypto-browserify'),

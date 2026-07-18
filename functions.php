@@ -25,5 +25,8 @@
     require_once THEME_DIR . '/app/helpers.php';
 
     // Initialize theme classes
+    use ProfDesigns\Theme\Theme;
+    use ProfDesigns\Theme\Config;
+
     Theme::instance();
     Config::instance();

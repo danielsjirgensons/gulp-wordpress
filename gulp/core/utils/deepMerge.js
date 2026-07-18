@@ -1,30 +1,29 @@
-const lodash = require('lodash');
-
 /**
- * Simple lodash wrapper to
- * deep merge two objects
+ * Deep merge two objects with array concatenation support.
+ * Native JavaScript implementation to eliminate lodash dependency.
  *
- * @param a
- * @param b
- * @returns {*}
+ * @param target - The target object to merge into
+ * @param source - The source object to merge from
+ * @returns {*} The merged result
  */
-module.exports = function (a, b) {
-	return lodash.mergeWith(a, b, deep);
-};
+module.exports = function deepMerge(target, source) {
+	if (typeof target !== 'object' || target === null) return source;
+	if (typeof source !== 'object' || source === null) return target;
 
+	const result = Array.isArray(target) ? [...target] : { ...target };
 
-/**
- * Utility for lodash.merge
- * to manage deeply merging
- * objects as well as the
- * arrays they contain
- *
- * @param a
- * @param b
- * @returns {Array.<T>|string}
- */
-function deep(a, b) {
-	if (lodash.isArray(a) && lodash.isArray(b)) {
-		return a.concat(b);
+	for (const key in source) {
+		if (source.hasOwnProperty(key)) {
+			if (Array.isArray(source[key]) && Array.isArray(result[key])) {
+				result[key] = result[key].concat(source[key]);
+			} else if (typeof source[key] === 'object' && source[key] !== null &&
+				typeof result[key] === 'object' && result[key] !== null) {
+				result[key] = deepMerge(result[key], source[key]);
+			} else {
+				result[key] = source[key];
+			}
+		}
 	}
-}
+
+	return result;
+};

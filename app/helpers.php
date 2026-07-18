@@ -1,9 +1,18 @@
 <?php
+    declare( strict_types=1 );
+
     /**
-     * Outputs the theme logo
-     * Uses the custom logo if set, otherwise outputs the site title
-     * Caches the output for 1 hour to improve performance
-     * */
+     * Theme helper functions.
+     */
+
+    /**
+     * Outputs the theme logo.
+     *
+     * Uses the custom logo if set, otherwise outputs the site title.
+     * Caches the output for 1 hour to improve performance.
+     *
+     * @return string HTML output for the logo or site title.
+     */
     function get_page_logo(): string {
         $cache_key = 'theme_logo_html';
         $logo      = wp_cache_get( $cache_key, 'theme' );
