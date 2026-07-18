@@ -29,7 +29,9 @@
             remove_action( 'wp_head', 'auto_sizes_render_generator' );
             remove_action( 'wp_head', 'plsr_render_generator_meta_tag' );
             remove_action( 'wp_head', 'webp_uploads_render_generator' );
-            remove_action( 'wp_head', [ $sitepress, 'meta_generator_tag' ] );
+            if ( isset( $sitepress ) && is_object( $sitepress ) ) {
+                remove_action( 'wp_head', [ $sitepress, 'meta_generator_tag' ] );
+            }
 
             remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
             remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -55,7 +57,7 @@
          * @return void
          */
         public function theme_translation_setup(): void {
-            load_theme_textdomain( 'sev', get_template_directory() . '/languages' );
+            load_theme_textdomain( 'textdomain', get_template_directory() . '/languages' );
             $locale      = get_locale();
             $locale_file = get_template_directory() . "/languages/{$locale}.php";
             if ( is_readable( $locale_file ) ) {

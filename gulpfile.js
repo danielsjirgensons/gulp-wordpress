@@ -107,13 +107,3 @@ gulp.task('build', gulp.parallel(
 	'styles:prod'
 )
 );
-
-gulp.task('clean', gulp.parallel(
-	'fonts:clean',
-	'svg:clean',
-	'sprite:clean',
-	'images:clean',
-	'scripts:clean',
-	'styles:clean'
-)
-);

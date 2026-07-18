@@ -6,9 +6,9 @@
 
     // Define constants
     const THEMEDIR = __DIR__;
-    define( 'DIRURL', get_stylesheet_directory_uri() );
-    const ASSETS_URL = DIRURL . '/assets';
-    define( 'VERSIONS', ( wp_get_environment_type() === 'local' ) ? time() : wp_get_theme()->get( 'Version' ) );
+    define( 'ASSETS_URL', get_stylesheet_directory_uri() . '/assets' );
+    define( 'THEME_VERSION', wp_get_theme()->get( 'Version' ) );
+    define( 'VERSIONS', ( wp_get_environment_type() === 'local' ) ? THEME_VERSION . '-dev' : THEME_VERSION );
     define( 'PRODUCTION', wp_get_environment_type() !== 'local' );
 
     // Error reporting in development

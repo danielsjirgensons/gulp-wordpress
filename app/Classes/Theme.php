@@ -14,23 +14,11 @@
         }
 
         public function __construct() {
-            global $sitepress;
-
             add_action( 'after_setup_theme', [ $this, 'theme_support' ] );
             add_action( 'init', [ $this, 'theme_nav_menus' ] );
-            // add_action('after_setup_theme', [$this, 'theme_thumbnail_sizes']);
             add_action( 'wp_enqueue_scripts', [ $this, 'theme_script_load' ] );
+            // add_action('after_setup_theme', [$this, 'theme_thumbnail_sizes']);
             // add_action( 'widgets_init', [ $this, 'theme_widgets' ] );
-
-            // Remove useful actions
-            remove_action( 'wp_head', 'wp_generator' );
-            remove_action( 'wp_head', 'auto_sizes_render_generator' );
-            remove_action( 'wp_head', 'plsr_render_generator_meta_tag' );
-            remove_action( 'wp_head', 'webp_uploads_render_generator' );
-            remove_action( 'wp_head', [ $sitepress, 'meta_generator_tag' ] );
-
-            remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-            remove_action( 'wp_print_styles', 'print_emoji_styles' );
         }
 
         /**
@@ -40,7 +28,7 @@
             add_theme_support( 'post-thumbnails' ); // Post featured images
             add_theme_support( 'custom-logo' ); // Custom logo
             //add_theme_support( 'widgets' ); // Widgets
-            load_theme_textdomain( 'theme', get_template_directory() . '/languages' ); // Translations
+            load_theme_textdomain( 'textdomain', get_template_directory() . '/languages' ); // Translations
             add_theme_support( 'html5', [ 'script', 'style' ] ); // HTML5
 
             // Removing useless options

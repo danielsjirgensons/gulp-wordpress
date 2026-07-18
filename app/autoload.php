@@ -4,9 +4,9 @@
      * */
     spl_autoload_register( 'theme_class_autoload' );
     function theme_class_autoload( $class_name ): void {
-        $files = glob( __DIR__ . '/Classes/*.php' );
+        $class_file = __DIR__ . '/Classes/' . $class_name . '.php';
 
-        foreach ( $files as $file ) {
-            require_once $file;
+        if ( file_exists( $class_file ) ) {
+            require_once $class_file;
         }
     }
