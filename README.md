@@ -111,7 +111,7 @@ gulp sprite:dev      # Generate SVG sprites
 
 Assets are automatically enqueued in WordPress with proper versioning:
 
-**Development**: Uses timestamp for cache busting  
+**Development**: Uses theme version with `-dev` suffix (e.g., `1.0.0-dev`)  
 **Production**: Uses theme version from [style.css](style.css)
 
 Scripts are loaded with the `defer` strategy for optimal performance.

@@ -134,7 +134,7 @@ module.exports = deepMerge({
 					rules: [
 						{
 							test: /\.js$/,
-							exclude: /node_modules\/(?!(bootstrap)\/).*/,
+							exclude: /node_modules[\\/](?!(bootstrap)[\\/]).*/,
 							use: {
 								loader: 'babel-loader',
 								options: {

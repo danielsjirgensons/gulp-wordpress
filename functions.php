@@ -6,6 +6,9 @@
      * Main entry point for theme initialization
      */
 
+    use ProfDesigns\Theme\Theme;
+    use ProfDesigns\Theme\Config;
+
     // Define constants
     const THEME_DIR = __DIR__;
     define( 'ASSETS_URL', get_stylesheet_directory_uri() . '/assets' );
@@ -25,8 +28,5 @@
     require_once THEME_DIR . '/app/helpers.php';
 
     // Initialize theme classes
-    use ProfDesigns\Theme\Theme;
-    use ProfDesigns\Theme\Config;
-
     Theme::instance();
     Config::instance();
